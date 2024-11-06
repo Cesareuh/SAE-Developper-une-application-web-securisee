@@ -2,7 +2,7 @@
 
 namespace iutnc\nrv\action;
 
-class CreerSoiree extends Action
+class AfficherListeSpectacleAction extends Action
 {
 
     public function execute(): string
