@@ -1,0 +1,10 @@
+{
+    "name": "sae/nrv",
+    "description": "Le futur de la programmation de spectacles",
+    "type": "project",
+    "autoload": {
+	"psr-4": {
+	    "iutnc\\nrv\\" : "./src/classes"
+	}
+    }
+}
