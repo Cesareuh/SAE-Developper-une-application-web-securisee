@@ -6,13 +6,17 @@ use iutnc\nrv\evenement\Spectacle;
 class Soiree{
 	protected int $id;
 	protected float $tarif;
-	protected string $date, $lieu, $thematique;
+	protected string $date, $lieu, $thematique, $nom, $image;
 	protected $listeSpectacles;
 
-	public function __construct($id, $date, $lieu, $thematique, $tarif){
+	public function __construct($id, $nom, $date, $lieu, $thematique, $tarif, $image){
 		$this->id = $id;
+        $this->nom = $nom;
 		$this->date = $date;
 		$this->lieu = $lieu;
+        $this->thematique = $thematique;
+        $this->tarif = $tarif;
+        $this->image = $image;
 		$this->listeSpectacles = array();
 	}
 

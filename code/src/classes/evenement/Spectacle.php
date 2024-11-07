@@ -24,7 +24,7 @@ class Spectacle{
 	public function __get($attr):mixed{
 		if(property_exists($this, $attr)){
 			return $this->$attr;
-		}
+		}else return null;
 	}
 
 }
