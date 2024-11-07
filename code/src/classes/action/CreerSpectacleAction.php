@@ -50,7 +50,6 @@ class CreerSpectacleAction extends Action
 
 			$at = new Spectacle($infos[0], $infos[1], $infos[2], $infos[3], $infos[4], $infos[5], $infos[6]);
 			$at = $repo->saveAjouterSoiree($at);
-			$repo->ajouterSpectacle($_SESSION['Soiree'], $at);
 
 			return "<div>Spectacle ajouté</div>";
         }
