@@ -88,44 +88,44 @@ CREATE TABLE Image (
 
 -- Table Spectacle
 CREATE TABLE Spectacle (
-                           ID_Spectacle INT PRIMARY KEY,
-                           Titre VARCHAR(100) NOT NULL,
-                           Artiste VARCHAR(100),
-                           Duree TIME,
-                           Style VARCHAR(50),
+                           id_spectacle INT PRIMARY KEY,
+                           titre VARCHAR(100) NOT NULL,
+                           artiste VARCHAR(100),
+                           duree TIME,
+                           style VARCHAR(50),
                            video VARCHAR(500),
                            description VARCHAR(2000),
-                           ID_Img INT,
-                           FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
+                           id_img INT,
+                           FOREIGN KEY (id_img) REFERENCES Image(id_img)
 );
 
 -- Table Soiree
 CREATE TABLE Soiree (
-                        ID_Soiree INT PRIMARY KEY,
-                        Nom_soiree VARCHAR(50),
-                        Date DATE NOT NULL,
-                        Nom_Lieu VARCHAR(100) NOT NULL,
+                        id_soiree INT PRIMARY KEY,
+                        nom_soiree VARCHAR(50),
+                        date DATE NOT NULL,
+                        nom_lieu VARCHAR(100) NOT NULL,
                         tarif DECIMAL(10, 2),
-                        thématique VARCHAR(100),
-                        ID_Img INT,
-                        FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
+                        thematique VARCHAR(100),
+                        id_img INT,
+                        FOREIGN KEY (id_img) REFERENCES Image(id_img)
 );
 
 -- Table de liaison SoireeToSpectacle
 CREATE TABLE SoireeToSpectacle (
-                                   ID_Soiree INT,
-                                   ID_Spectacle INT,
-                                   PRIMARY KEY (ID_Soiree, ID_Spectacle),
-                                   FOREIGN KEY (ID_Soiree) REFERENCES Soiree(ID_Soiree),
-                                   FOREIGN KEY (ID_Spectacle) REFERENCES Spectacle(ID_Spectacle)
+                                   id_soiree INT,
+                                   id_spectacle INT,
+                                   PRIMARY KEY (id_soiree, id_spectacle),
+                                   FOREIGN KEY (id_soiree) REFERENCES Soiree(id_soiree),
+                                   FOREIGN KEY (id_spectacle) REFERENCES Spectacle(id_spectacle)
 );
 
 -- Table Utilisateur
 CREATE TABLE Utilisateur (
-                             ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+                             id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
                              mail VARCHAR(100) NOT NULL,
-                             MotDePasse VARCHAR(255) NOT NULL,
-                             Role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
+                             motdepasse VARCHAR(255) NOT NULL,
+                             role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
 );
 
 -- Insertion des utilisateurs
@@ -149,7 +149,7 @@ VALUES
     (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2);
 
 -- Insertion des soirées
-INSERT INTO Soiree (ID_Soiree, Nom_soiree, Date, Nom_Lieu, tarif, thématique, ID_Img)
+INSERT INTO Soiree (ID_Soiree, Nom_soiree, Date, Nom_Lieu, tarif, thematique, ID_Img)
 VALUES
     (1, 'Soirée 1', '2024-10-01', 'Nancy Arena', 25.00, 'Rock', 3),
     (2, 'Soirée 2', '2024-10-02', 'Le Zenith', 30.00, 'Blues', 3),

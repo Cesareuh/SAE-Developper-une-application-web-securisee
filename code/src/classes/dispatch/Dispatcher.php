@@ -50,7 +50,9 @@ class Dispatcher{
             </head>
             <body>
                 <div id="index">
-                    <a href="main.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soiree</button></a>
+                    <a href="main.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soirée</button></a>
+                    <a href="main.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
+                    <a href="main.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
                 </div>
                 $html
             </body>

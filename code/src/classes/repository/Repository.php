@@ -31,7 +31,7 @@ class Repository
     }
 
     public function trouveTousSpectacles(): array{
-        $query=$this->pdo->prepare("SELECT * FROM `spectacle`");
+        $query=$this->pdo->prepare("SELECT * FROM spectacle");
         $query->execute();
         $list=[];
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
@@ -41,9 +41,9 @@ class Repository
             $duree=$row['duree'];
             $style=$row['style'];
             $video=$row['video'];
-            $photo=$row['photo'];
+            $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $photo, $description);
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, (int)$duree, $style, $video, $description);
             array_push($list, $spectacle);
         }
         return $list;
@@ -60,7 +60,7 @@ class Repository
             $lieu=$row['nom_lieu'];
             $tarif=$row['tarif'];
             $thematique=$row['thematique'];
-            $image=$row['image_soiree'];
+            $image=$row['id_img'];
             $soiree=new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image);
             array_push($list, $soiree);
         }
@@ -76,7 +76,7 @@ class Repository
         $duree=$spectacle->__get('duree');
         $style=$spectacle->__get('style');
         $video=$spectacle->__get('video');
-        $photo=$spectacle->__get('photo-artiste');
+        $photo=$spectacle->__get('id_img');
         $description=$spectacle->__get('description');
         $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $titre);
@@ -96,5 +96,18 @@ class Repository
         $stmt->bindParam(1, $idSoiree);
         $stmt->bindParam(2, $idSpectacle);
         $stmt->execute();
+    }
+
+    public function ajouterImage(String $img, String $nom, String $type, int $taille):int{
+        $img_blob=file_get_contents($img);
+        $id=0;
+        $stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?)');
+        $stmt->bindParam(1, $id);
+        $stmt->bindParam(2, $nom);
+        $stmt->bindParam(3, $taille);
+        $stmt->bindParam(4, $type);
+        $stmt->bindParam(5, $img_blob);
+        $stmt->execute();
+        return $id;
     }
 }
