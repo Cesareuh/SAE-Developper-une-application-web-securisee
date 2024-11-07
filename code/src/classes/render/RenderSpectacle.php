@@ -15,18 +15,34 @@ class RenderSpectacle extends Renderer{
 		$res = "";
 		switch($selector){
 		case 1:
-			$res = $res ."<div>
-				<img ".$this->spec->photo_artiste." alt=Photo de ".$this->spec->artiste."/>
-				<h1 id=artiste>".$this->spec->artiste."</h1>
-				<h2 id=titre>".$this->spec->titre."</h2>
-				<p id=style>".$this->spec->style."</p>
-				<p id=duree>".$this->spec->duree."</p>
-				<p id=desc>".$this->spec->description."</p>
-				 <iframe width=\"420\" height=\"315\"
-				src=\"https://www.youtube.com/embed/tgbNymZ7vqY\"></iframe>
+			$res = $res ."<div class=simple>
+				<h1 class=artiste>".$this->spec->artiste."</h1>
+				<h2 class=titre>".$this->spec->titre."</h2>
+				<p class=style>".$this->spec->style."</p>
+				<p class=duree>".$this->spec->duree."</p>
 				</div>";
 			break;
 		case 2:
+			$res = $res ."
+		<div class=bg></div>
+		<div class=complexe>
+			<div class=haut>
+				<img src=".$this->spec->photo_artiste." class=photo_profil />
+				<h1 class=artiste>".$this->spec->artiste."</h1>
+			</div>
+			<div class=bas>
+				<h2 class=titre>".$this->spec->titre."</h2>
+				<div class=infos>
+					<h3 class=style>".$this->spec->style."</h3>
+					<h3 class=duree>" . $this->spec->duree . " min</h3>
+				</div>
+				<div class=presentation>
+					<p class=desc>".$this->spec->description."</p>
+					<hr>
+					<iframe width=560 height=315 src=".$this->spec->video." title=YouTube video player frameborder=0 allow=accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share referrerpolicy=strict-origin-when-cross-origin allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>";
 			break;
 		}
 		return $res;

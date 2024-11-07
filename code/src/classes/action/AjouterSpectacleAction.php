@@ -15,25 +15,28 @@ class AjouterSpectacleAction extends Action
             $lSoiree = $repo->trouveToutesSoirees();
             $res=<<<END
                 <form method="POST" action="?action=ajouter-spectacle">
-                    <select name="spectacle">                
+                <label>Soiree</label>
+                    <select name="soiree"> 
+                        <option value='' selected>choisissez une soiree</option>               
             END;
-            foreach ($lSpectacle as $spectacle) {
+            foreach ($lSoiree as $soiree) {
                 $res.=<<<END
-                        <option value="{$spectacle}">{$spectacle->__get('titre')}</option>
+                        <option value="{$soiree->__get('id')}">{$soiree->__get('nom')}</option>
                 END;
             }
             $res.=<<<END
                     </select>
-                    <select name="soiree">                
+                    <Label>Spectacle</Label>
+                    <select name="spectacle">
+                        <option value='' selected>choisissez un spectacle</option>                
             END;
-            foreach ($lSoiree as $soiree) {
+            foreach ($lSpectacle as $spectacle) {
                 $res.=<<<END
-                        <option value="{$soiree}">{$soiree->__get('nom')}</option>
+                        <option value="{$spectacle->__get('id')}">{$spectacle->__get('titre')}</option>
                 END;
             }
-
             $res .= <<<END
-                    </select>";
+                    </select>
                     <button type="submit">Valider</button>
                 </form>
                 END;

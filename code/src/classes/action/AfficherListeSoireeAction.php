@@ -9,7 +9,7 @@ class AfficherListeSoireeAction extends Action
     public function execute(): string
     {
 
-        $soirees = Repository::getInstance()->trouveToutesSoireesAvecImages();
+        $soirees = Repository::getInstance()->trouveToutesSoirees();
 
 
         $html = "<h1>Liste des Soirées du Festival</h1><ul>";

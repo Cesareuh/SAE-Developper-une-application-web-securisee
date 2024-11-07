@@ -10,7 +10,7 @@ class AffichageSoireeAction extends Action
     {
         $idSoiree = $_GET['id_soiree'] ?? 0;
 
-        
+
         $soiree = Repository::getInstance()->afficherSoiree($idSoiree);
 
         if ($soiree === null) {

@@ -87,7 +87,9 @@ CREATE TABLE image (
 );
 
 -- Table Spectacle
-CREATE TABLE spectacle (
+
+CREATE TABLE Spectacle (
+
                            id_spectacle INT PRIMARY KEY,
                            titre VARCHAR(100) NOT NULL,
                            artiste VARCHAR(100),
@@ -95,12 +97,16 @@ CREATE TABLE spectacle (
                            style VARCHAR(50),
                            video VARCHAR(500),
                            description VARCHAR(2000),
+
                            id_Img INT,
                            FOREIGN KEY (id_Img) REFERENCES image(id_img)
 );
 
+
+
 -- Table Soiree
-CREATE TABLE soiree (
+CREATE TABLE Soiree (
+
                         id_soiree INT PRIMARY KEY,
                         nom_soiree VARCHAR(50),
                         date DATE NOT NULL,
@@ -120,8 +126,19 @@ CREATE TABLE soireetospectacle (
                                    FOREIGN KEY (id_sSpectacle) REFERENCES spectacle(id_spectacle)
 );
 
+
+
+-- Table de liaison SoireeToSpectacle
+CREATE TABLE SoireeToSpectacle (
+                                   id_soiree INT,
+                                   id_spectacle INT,
+                                   PRIMARY KEY (id_soiree, id_spectacle),
+                                   FOREIGN KEY (id_soiree) REFERENCES Soiree(id_soiree),
+                                   FOREIGN KEY (id_spectacle) REFERENCES Spectacle(id_spectacle)
+);
+
 -- Table Utilisateur
-CREATE TABLE utilisateur (
+CREATE TABLE Utilisateur (
                              id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
                              mail VARCHAR(100) NOT NULL,
                              motdepasse VARCHAR(255) NOT NULL,
@@ -149,6 +166,7 @@ VALUES
     (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2);
 
 -- Insertion des soirées
+
 INSERT INTO Soiree (id_soiree, nom_soiree, date, nom_Lieu, tarif, thématique, id_img)
 VALUES
     (1, 'Soirée 1', '2024-10-01', 'Nancy Arena', 25.00, 'Rock', 3),

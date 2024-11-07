@@ -3,8 +3,9 @@
 namespace iutnc\nrv\evenement;
 
 class Spectacle{
-	protected int $id, $duree;
+	protected int $id, $duree, $id_img;
 	protected string $titre, $artiste, $photo_artiste, $style, $description, $video;
+
 
 	public function __construct($id, $titre, $artiste, $photo_artiste, $duree, $style, $description, $video){
 		$this->id = $id;
