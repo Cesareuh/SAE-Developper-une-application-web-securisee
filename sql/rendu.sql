@@ -62,7 +62,7 @@
 -- Table Soiree
 CREATE TABLE Soiree (
     ID_Soiree INT PRIMARY KEY,
-    Nom_soiree VARCHAR(50)
+    Nom_soiree VARCHAR(50),
     Date DATE NOT NULL,
     Nom_Lieu VARCHAR(100) NOT NULL,
     tarif DECIMAL(10, 2),
@@ -108,7 +108,7 @@ VALUES
 -- Insertion des spectacles
 INSERT INTO Spectacle (ID_Spectacle, Titre, Artiste, Duree, Style, video, photo, desription) VALUES
     (1, 'Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'acdc.png',null),
-    (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'blues.png';null);
+    (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'blues.png',null);
 
 -- Insertion des soirées
 INSERT INTO Soiree (ID_Soiree,nom_soiree, Date, Nom_Lieu, tarif, thématique,  image_soiree) VALUES

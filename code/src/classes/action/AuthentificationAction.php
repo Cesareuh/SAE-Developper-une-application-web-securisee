@@ -2,48 +2,38 @@
 
 namespace iutnc\nrv\action;
 
-use PDO;
+use iutnc\nrv\auth\AuthnProvider;
+use iutnc\nrv\repository\Repository;
 
 class AuthentificationAction extends Action
 {
     public function execute(): string
     {
-        // type post?
+
         if ($this->http_method === 'POST') {
-            // Récupérer les info du formulaire
+            // Récupérer les informations du formulaire
             $mail = $_POST['mail'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            // pour se co à la db
-            $db = pdo::getInstance()->getConnection();
+            try {
+                // Appelle la méthode signin pour valider l'authentification
+                AuthnProvider::signin($mail, $password);
 
-
-            $sql = "SELECT ID_Utilisateur, mail, MotDePasse, Role FROM Utilisateur WHERE mail = :mail";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':mail', $mail);
-            $stmt->execute();
-
-            // recup les infos du user
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            // user existe ? bon mdp ?
-            if ($user && password_verify($password, $user['MotDePasse'])) {
-                // Si l'authentification réussit, démarrer une session
+                //  démarre une session si l'auth marche
                 session_start();
-                $_SESSION['user_id'] = $user['ID_Utilisateur'];
-                $_SESSION['user_email'] = $user['mail'];
-                $_SESSION['user_role'] = $user['Role'];
+                $_SESSION['user'] = $mail;
 
-                // retour à la page d'accueil
+                // Rediriger l'utilisateur vers la page d'accueil ou une page protégée
                 header('Location: /accueil');
                 exit;
-            } else {
+            } catch (\Exception $e) {
+                // Si l'auth echoue: erreur
                 $html = "<p style='color: red;'>Identifiants incorrects. Veuillez réessayer.</p>";
                 return $html;
             }
         }
 
-        // si non : se connecter
+        // Si la méthode HTTP n'est pas POST, hop connexion
         $html = "
             <h1>Connexion</h1>
             <form method='POST' action='/authentification'>
