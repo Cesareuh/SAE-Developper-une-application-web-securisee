@@ -19,8 +19,8 @@ class CreerSoireeAction extends Action
             $repo = Repository::getInstance();
             $_SESSION['soiree'] = new Soiree(filter_var($_POST['nom_soiree'], FILTER_SANITIZE_SPECIAL_CHARS));
 
-            $_SESSION['soiree'] = $repo->saveEmptyPlaylist($_SESSION['soiree'], AuthnProvider::getSignedInUser()['id']);
-            
+            $_SESSION['soiree'] = $repo->saveEmptySoiree($_SESSION['soiree'], AuthnProvider::getSignedInUser()['role']);
+
             // $render = (new AudioListRenderer($_SESSION['playlist']))->render();
             return "<div>Soirée créée</div>";
         }
