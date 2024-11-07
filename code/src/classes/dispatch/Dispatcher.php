@@ -49,6 +49,9 @@ class Dispatcher{
                 <title>NRV</title>
             </head>
             <body>
+                <div id="index">
+                    <a href="main.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soiree</button></a>
+                </div>
                 $html
             </body>
         END;

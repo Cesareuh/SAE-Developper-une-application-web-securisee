@@ -35,9 +35,7 @@ class AuthnProvider{
         return $stmt->execute([$email, $hashedPassword]);
     }
 
-
-
-	static function getSignedInUser(): ? array{
+	static function getSignedInUser(): ?array{
 		if(isset($_SESSION["user"])){
 			$repo = Repository::getInstance();
 			$stmt = $repo->pdo->prepare("select * from Utilisateur where mail = ?");
