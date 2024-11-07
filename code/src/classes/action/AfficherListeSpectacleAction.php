@@ -7,29 +7,20 @@ use iutnc\nrv\repository\Repository;
 class AfficherListeSpectacleAction extends Action
 {
     public function execute(): string {
+        // Retrieve all spectacles using the repository method
+        $spectacles = Repository::getInstance()->trouveTousSpectacles();
 
-        $db = Repository::getInstance()->getConnection();
-
-
-        $sql = "SELECT id_spectacle, titre, artiste, duree, style FROM spectacle";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-
-
-        $spectacles = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-
+        // Generate the HTML output
         $html = "<h1>Liste des Spectacles</h1><ul>";
         foreach ($spectacles as $spectacle) {
             $html .= "<li>";
-            $html .= "<p><strong>Titre :</strong> " . htmlspecialchars($spectacle['titre']) . "</p>";
-            $html .= "<p><strong>Artiste :</strong> " . htmlspecialchars($spectacle['artiste']) . "</p>";
-            $html .= "<p><strong>Durée :</strong> " . htmlspecialchars($spectacle['duree']) . " minutes</p>";
-            $html .= "<p><strong>Style :</strong> " . htmlspecialchars($spectacle['style']) . "</p>";
+            $html .= "<p><strong>Titre :</strong> " . htmlspecialchars($spectacle->getTitre()) . "</p>";
+            $html .= "<p><strong>Artiste :</strong> " . htmlspecialchars($spectacle->getArtiste()) . "</p>";
+            $html .= "<p><strong>Durée :</strong> " . htmlspecialchars($spectacle->getDuree()) . " minutes</p>";
+            $html .= "<p><strong>Style :</strong> " . htmlspecialchars($spectacle->getStyle()) . "</p>";
 
-
-            $html .= "<a href='?action=afficher_spectacle&id=" . urlencode($spectacle['id_spectacle']) . "'>Voir les détails</a>";
-
+            // Link to view the spectacle details
+            $html .= "<a href='?action=afficher_spectacle&id=" . urlencode($spectacle->getId()) . "'>Voir les détails</a>";
             $html .= "</li><br>";
         }
         $html .= "</ul>";
