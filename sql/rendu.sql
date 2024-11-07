@@ -1,101 +1,132 @@
-1. Dictionnaire des Données
-    Spectacle:
-    ID_Spectacle : Identifiant unique pour chaque spectacle.
-    Titre : Le titre du spectacle.
-    Artiste : L artiste ou le groupe qui réalise le spectacle.
-    Duree : Durée du spectacle (format HH:MM:SS).
-    Style : Le genre musical du spectacle (ex. Classic Rock, Metal, Blues Rock, etc.).
-    video : Lien vidéo pour le spectacle.
-    photo : Photo du groupe/artiste.
-    description : description detaillée du spectacle
+1.
+1. Spectacle
+    ID_Spectacle : Identifiant unique pour chaque spectacle (clé primaire).
+    Titre : Titre du spectacle.
+    Artiste : Lartiste ou le groupe qui réalise le spectacle.
+    Duree : Durée du spectacle, au format HH:MM:SS.
+    Style : Genre musical du spectacle (ex. Classic Rock, Metal, Blues Rock).
+    video : Lien vers une vidéo du spectacle.
+    photo : Lien vers la photo du groupe ou artiste.
+    description : Description détaillée du spectacle.
 
-    Soiree
-    ID_Soiree : Identifiant unique pour chaque soirée.
-    Nom_Soirée : nom de la soirée
-    Date : La date spécifique de la soirée.
-    Nom_Lieu : Le nom du lieu où la soirée se déroule.
-    tarif : Le tarif d entrée pour la soirée.
-    thématique : La thématique de la soirée (par exemple, soirée métal, soirée rock, etc.).
-    image_soiree : image qui represente la soiree
+2. Image
+    id_img : Identifiant unique pour chaque image (clé primaire).
+    nom_img : Nom de l image.
+    taille_img : Taille de l image (ex. 500KB).
+    type_img : Type de l image (ex. image/png).
+    desc_img : Description de l image.
+    blob_img : Données de l image au format binaire (BLOB).
 
-    SoireeToSpectacle
-    ID_Soiree : Lien vers une soirée spécifique.
-    ID_Spectacle : Lien vers un spectacle spécifique.
+3. Soiree
+    ID_Soiree : Identifiant unique pour chaque soirée (clé primaire).
+    Nom_Soiree : Nom de la soirée.
+    Date : Date de la soirée.
+    Nom_Lieu : Nom du lieu où se déroule la soirée.
+    tarif : Tarif d entrée pour la soirée.
+    thématique : Thématique de la soirée (ex. soirée métal, soirée rock).
+    image_soiree : Image représentant la soirée, en référence à une image de l entité Image.
 
-    Utilisateur
-    ID_Utilisateur : Identifiant unique pour chaque utilisateur.
-    mail : L email de l utilisateur.
-    MotDePasse : Le mot de passe haché de l utilisateur.
-    Role : Le rôle de l utilisateur (visiteur, staff, admin, organisateur).
+4. SoireeToSpectacle
+    ID_Soiree : Référence vers une soirée spécifique (clé étrangère vers Soiree).
+    ID_Spectacle : Référence vers un spectacle spécifique (clé étrangère vers Spectacle).
+    Clé primaire : Combinaison de ID_Soiree et ID_Spectacle.
+    5. Utilisateur
+    ID_Utilisateur : Identifiant unique pour chaque utilisateur (clé primaire).
+    mail : Adresse email de l utilisateur.
+    MotDePasse : Mot de passe haché de l utilisateur.
+    Role : Rôle de l utilisateur dans le système (ex. visiteur, staff, admin, organisateur).
 
-2. Dépendances Fonctionnelles
+2.Spectacle
 
     ID_Spectacle → Titre, Artiste, Duree, Style, video, photo, description
 
-    ID_Soiree → Date, Nom_Soirée,Nom_Lieu, tarif, thématique, image_soiree
+    Id_img → nom_img, taille_img, type_img, desc_img, blob_img
 
-    ID_Soiree, ID_Spectacle → Aucun autre attribut (clés de liaison)
+    ID_Soiree → Date, Nom_Soiree, Nom_Lieu, tarif, thématique, image_soiree
+
+    (ID_Soiree, ID_Spectacle) → Aucun autre attribut.
 
     ID_Utilisateur → mail, MotDePasse, Role
 
-3. Clés Minimales
 
+3. Clés Minimales
     Spectacle : ID_Spectacle est la clé primaire.
+    Image : id_img est la clé primaire.
     Soiree : ID_Soiree est la clé primaire.
-    SoireeToSpectacle : (ID_Soiree, ID_Spectacle) est la clé primaire.
+    SoireeToSpectacle : (ID_Soiree, ID_Spectacle) est la clé primaire (clé composite).
     Utilisateur : ID_Utilisateur est la clé primaire.
 
 4. Vérification de la 3FN
 
-    Spectacle : Respecte la 3FN, car les attributs dépendent uniquement de l identifiant primaire ID_Spectacle.
-    Soiree : Respecte la 3FN, car les attributs dépendent uniquement de l identifiant primaire ID_Soiree.
-    SoireeToSpectacle : Respecte la 3FN, car il s agit d une table de liaison sans redondance d informations.
-    Utilisateur : Respecte la 3FN, car les attributs dépendent uniquement de l identifiant primaire ID_Utilisateur.
+    Spectacle : Respecte la 3FN, car les attributs (Titre, Artiste, Duree, Style, video, photo, description) dépendent
+                   uniquement de l identifiant primaire ID_Spectacle.
+    Image : Respecte la 3FN, car les attributs (nom_img, taille_img, type_img, desc_img, blob_img) dépendent uniquement
+                   de l identifiant primaire id_img.
+    Soiree : Respecte la 3FN, car les attributs (Date, Nom_Soiree, Nom_Lieu, tarif, thématique, image_soiree) dépendent
+                   uniquement de l identifiant primaire ID_Soiree.
+    SoireeToSpectacle : Respecte la 3FN, car il s agit d une table de liaison définie par une clé composite (ID_Soiree,
+                   ID_Spectacle) et ne contient pas de redondance d informations.
+    Utilisateur : Respecte la 3FN, car les attributs (mail, MotDePasse, Role) dépendent uniquement de l identifiant
+                   primaire ID_Utilisateur.
 
 5. Décomposition en Relations Respectant la 3FN
-
-    La structure actuelle des tables respecte déjà la 3FN. Il n est pas nécessaire de décomposer davantage.
+    La structure actuelle des tables respecte déjà la 3FN, car chaque table est organisée de manière à ce que tous les
+    attributs dépendent uniquement de la clé primaire.
 
 6. Script SQL pour Créer les Tables et Insérer des Données
 
 
--- Table Soiree
-CREATE TABLE Soiree (
-    ID_Soiree INT PRIMARY KEY,
-    Nom_soiree VARCHAR(50),
-    Date DATE NOT NULL,
-    Nom_Lieu VARCHAR(100) NOT NULL,
-    tarif DECIMAL(10, 2),
-    thématique VARCHAR(100)
+-- Table Image
+CREATE TABLE Image (
+                       id_img INT NOT NULL AUTO_INCREMENT,
+                       nom_img VARCHAR(50) NOT NULL,
+                       taille_img VARCHAR(25) NOT NULL,
+                       type_img VARCHAR(25) NOT NULL,
+                       desc_img VARCHAR(100) NOT NULL,
+                       blob_img BLOB NOT NULL,
+                       PRIMARY KEY (id_img)
 );
 
 -- Table Spectacle
 CREATE TABLE Spectacle (
-    ID_Spectacle INT PRIMARY KEY,
-    Titre VARCHAR(100) NOT NULL,
-    Artiste VARCHAR(100),
-    Duree TIME,
-    Style VARCHAR(50),
-    video VARCHAR(500),
-    photo VARCHAR(50),
-    description VARCHAR(2000)
+                           ID_Spectacle INT PRIMARY KEY,
+                           Titre VARCHAR(100) NOT NULL,
+                           Artiste VARCHAR(100),
+                           Duree TIME,
+                           Style VARCHAR(50),
+                           video VARCHAR(500),
+                           description VARCHAR(2000),
+                           ID_Img INT,
+                           FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
+);
+
+-- Table Soiree
+CREATE TABLE Soiree (
+                        ID_Soiree INT PRIMARY KEY,
+                        Nom_soiree VARCHAR(50),
+                        Date DATE NOT NULL,
+                        Nom_Lieu VARCHAR(100) NOT NULL,
+                        tarif DECIMAL(10, 2),
+                        thématique VARCHAR(100),
+                        ID_Img INT,
+                        FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
 );
 
 -- Table de liaison SoireeToSpectacle
 CREATE TABLE SoireeToSpectacle (
-    ID_Soiree INT,
-    ID_Spectacle INT,
-    PRIMARY KEY (ID_Soiree, ID_Spectacle),
-    FOREIGN KEY (ID_Soiree) REFERENCES Soiree(ID_Soiree),
-    FOREIGN KEY (ID_Spectacle) REFERENCES Spectacle(ID_Spectacle)
+                                   ID_Soiree INT,
+                                   ID_Spectacle INT,
+                                   PRIMARY KEY (ID_Soiree, ID_Spectacle),
+                                   FOREIGN KEY (ID_Soiree) REFERENCES Soiree(ID_Soiree),
+                                   FOREIGN KEY (ID_Spectacle) REFERENCES Spectacle(ID_Spectacle)
 );
 
 -- Table Utilisateur
 CREATE TABLE Utilisateur (
-    ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
-    mail VARCHAR(100) NOT NULL,
-    MotDePasse VARCHAR(255) NOT NULL,
-    Role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
+                             ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+                             mail VARCHAR(100) NOT NULL,
+                             MotDePasse VARCHAR(255) NOT NULL,
+                             Role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
 );
 
 -- Insertion des utilisateurs
@@ -105,19 +136,29 @@ VALUES
     ('Alice@exemple.com', 'hashed_password_2', 'admin'),
     ('Bob@exemple.com', 'hashed_password_3', 'staff');
 
+-- Insertion des images
+INSERT INTO Image (nom_img, taille_img, type_img, desc_img, blob_img)
+VALUES
+    ('acdc.png', '500KB', 'image/png', 'Image de ACDC', null),
+    ('blues.png', '300KB', 'image/png', 'Image des Blues Brothers', null),
+    ('imagesoiree1.png', '450KB', 'image/png', 'Image pour soirée 1', null);
+
 -- Insertion des spectacles
-INSERT INTO Spectacle (ID_Spectacle, Titre, Artiste, Duree, Style, video, photo, desription) VALUES
-    (1, 'Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'acdc.png',null),
-    (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'blues.png',null);
+INSERT INTO Spectacle (ID_Spectacle, Titre, Artiste, Duree, Style, video, description, ID_Img)
+VALUES
+    (1, 'Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'Concert de rock classique', 1),
+    (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2);
 
 -- Insertion des soirées
-INSERT INTO Soiree (ID_Soiree,nom_soiree, Date, Nom_Lieu, tarif, thématique,  image_soiree) VALUES
-      (1,'Soirée 1', '2024-10-01', 'Nancy Arena', 25.00, 'Rock','imagesoiree1.png'),
-      (2, 'Soirée 2','2024-10-02', 'Le Zenith', 30.00, 'Blues','imagesoiree1.png'),
-      (3, 'Soirée 3','2024-10-03', 'La Lune', 20.00, 'Metal','imagesoiree1.png');
+INSERT INTO Soiree (ID_Soiree, Nom_soiree, Date, Nom_Lieu, tarif, thématique, ID_Img)
+VALUES
+    (1, 'Soirée 1', '2024-10-01', 'Nancy Arena', 25.00, 'Rock', 3),
+    (2, 'Soirée 2', '2024-10-02', 'Le Zenith', 30.00, 'Blues', 3),
+    (3, 'Soirée 3', '2024-10-03', 'La Lune', 20.00, 'Metal', 3);
 
 -- Insertion des relations SoireeToSpectacle
-INSERT INTO SoireeToSpectacle (ID_Soiree, ID_Spectacle) VALUES
+INSERT INTO SoireeToSpectacle (ID_Soiree, ID_Spectacle)
+VALUES
     (1, 1), -- Rock Night dans la première soirée
     (1, 2), -- Blues Vibes dans la première soirée
     (2, 1), -- Rock Night dans la deuxième soirée
