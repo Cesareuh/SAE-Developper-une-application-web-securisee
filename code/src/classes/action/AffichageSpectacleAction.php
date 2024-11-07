@@ -6,44 +6,35 @@ use iutnc\nrv\repository\Repository;
 
 class AffichageSpectacleAction extends Action
 {
-
     public function execute(): string
     {
+        // Récupérer l'ID du spectacle depuis l'URL (ou utiliser un ID par défaut)
+        $idSpectacle = $_GET['id_spectacle'] ?? 0;
 
-        $db = Repository::getInstance()->getConnection();
 
-        // Requête SQL avec jointure pour récupérer les informations de l'image associée à chaque spectacle
-        $sql = "SELECT Spectacle.ID_Spectacle, Spectacle.Titre, Spectacle.Artiste, Spectacle.Duree, Spectacle.Style, Spectacle.video, Spectacle.description, 
-                       Image.nom_img, Image.desc_img
-                FROM Spectacle
-                LEFT JOIN Image ON Spectacle.ID_Img = Image.id_img";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
+        $spectacle = Repository::getInstance()->afficherSpectacle($idSpectacle);
 
-        $spectacles = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        // Générer le HTML pour afficher les informations du spectacle avec les détails de l'image
-        $html = "<h1>Présentation du Spectacle</h1><ul>";
-        foreach ($spectacles as $spectacle) {
-            $html .= "<li>";
-            $html .= "<strong>Titre :</strong> " . htmlspecialchars($spectacle['Titre']) . "<br>";
-            $html .= "<strong>Artiste :</strong> " . htmlspecialchars($spectacle['Artiste']) . "<br>";
-            $html .= "<strong>Durée :</strong> " . htmlspecialchars($spectacle['Duree']) . "<br>";
-            $html .= "<strong>Style :</strong> " . htmlspecialchars($spectacle['Style']) . "<br>";
-            $html .= "<strong>Vidéo :</strong> " . htmlspecialchars($spectacle['video']) . "<br>";
-
-            // Afficher les informations de l'image si elles sont disponibles
-            if (!empty($spectacle['nom_img'])) {
-                $html .= "<strong>Image :</strong> " . htmlspecialchars($spectacle['nom_img']) . "<br>";
-                $html .= "<strong>Description de l'image :</strong> " . htmlspecialchars($spectacle['desc_img']) . "<br>";
-            } else {
-                $html .= "<strong>Image :</strong> Aucune image disponible<br>";
-            }
-
-            $html .= "<strong>Description :</strong> " . htmlspecialchars($spectacle['description']) . "<br>";
-            $html .= "</li><br>";
+        if ($spectacle === null) {
+            return "Spectacle non trouvé.";
         }
-        $html .= "</ul>";
+
+
+        $html = "<h1>Spectacle : " . htmlspecialchars($spectacle->getTitre()) . "</h1>";
+        $html .= "<strong>Artiste :</strong> " . htmlspecialchars($spectacle->getArtiste()) . "<br>";
+        $html .= "<strong>Durée :</strong> " . htmlspecialchars($spectacle->getDuree()) . " minutes<br>";
+        $html .= "<strong>Style :</strong> " . htmlspecialchars($spectacle->getStyle()) . "<br>";
+        $html .= "<strong>Description :</strong> " . htmlspecialchars($spectacle->getDescription()) . "<br>";
+
+        // Affichage du lien vers la vidéo du spectacle
+        if (!empty($spectacle->getVideo())) {
+            $html .= "<strong>Vidéo :</strong> <a href='" . htmlspecialchars($spectacle->getVideo()) . "' target='_blank'>Voir la vidéo</a><br>";
+        }
+
+        if (!empty($spectacle->getPhoto())) {
+            $html .= "<img src='" . htmlspecialchars($spectacle->getPhoto()) . "' alt='Image du spectacle'><br>";
+        } else {
+            $html .= "<p>Aucune image disponible pour ce spectacle.</p>";
+        }
 
         return $html;
     }

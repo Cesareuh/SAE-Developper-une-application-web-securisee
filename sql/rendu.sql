@@ -77,7 +77,7 @@
 
 
 -- Table Image
-CREATE TABLE Image (
+CREATE TABLE image (
                        id_img INT NOT NULL AUTO_INCREMENT,
                        nom_img VARCHAR(50) NOT NULL,
                        taille_img VARCHAR(25) NOT NULL,
@@ -87,76 +87,76 @@ CREATE TABLE Image (
 );
 
 -- Table Spectacle
-CREATE TABLE Spectacle (
-                           ID_Spectacle INT PRIMARY KEY,
-                           Titre VARCHAR(100) NOT NULL,
-                           Artiste VARCHAR(100),
-                           Duree TIME,
-                           Style VARCHAR(50),
+CREATE TABLE spectacle (
+                           id_spectacle INT PRIMARY KEY,
+                           titre VARCHAR(100) NOT NULL,
+                           artiste VARCHAR(100),
+                           duree TIME,
+                           style VARCHAR(50),
                            video VARCHAR(500),
                            description VARCHAR(2000),
-                           ID_Img INT,
-                           FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
+                           id_Img INT,
+                           FOREIGN KEY (id_Img) REFERENCES image(id_img)
 );
 
 -- Table Soiree
-CREATE TABLE Soiree (
-                        ID_Soiree INT PRIMARY KEY,
-                        Nom_soiree VARCHAR(50),
-                        Date DATE NOT NULL,
-                        Nom_Lieu VARCHAR(100) NOT NULL,
+CREATE TABLE soiree (
+                        id_soiree INT PRIMARY KEY,
+                        nom_soiree VARCHAR(50),
+                        date DATE NOT NULL,
+                        nom_lieu VARCHAR(100) NOT NULL,
                         tarif DECIMAL(10, 2),
-                        thématique VARCHAR(100),
-                        ID_Img INT,
-                        FOREIGN KEY (ID_Img) REFERENCES Image(id_img)
+                        thematique VARCHAR(100),
+                        id_img INT,
+                        FOREIGN KEY (id_img) REFERENCES image(id_img)
 );
 
 -- Table de liaison SoireeToSpectacle
-CREATE TABLE SoireeToSpectacle (
-                                   ID_Soiree INT,
-                                   ID_Spectacle INT,
-                                   PRIMARY KEY (ID_Soiree, ID_Spectacle),
-                                   FOREIGN KEY (ID_Soiree) REFERENCES Soiree(ID_Soiree),
-                                   FOREIGN KEY (ID_Spectacle) REFERENCES Spectacle(ID_Spectacle)
+CREATE TABLE soireetospectacle (
+                                   id_soiree INT,
+                                   id_spectacle INT,
+                                   PRIMARY KEY (id_soiree, id_spectacle),
+                                   FOREIGN KEY (id_soiree) REFERENCES soiree(id_soiree),
+                                   FOREIGN KEY (id_sSpectacle) REFERENCES spectacle(id_spectacle)
 );
 
 -- Table Utilisateur
-CREATE TABLE Utilisateur (
-                             ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE utilisateur (
+                             id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
                              mail VARCHAR(100) NOT NULL,
-                             MotDePasse VARCHAR(255) NOT NULL,
-                             Role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
+                             motdepasse VARCHAR(255) NOT NULL,
+                             role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL
 );
 
 -- Insertion des utilisateurs
-INSERT INTO Utilisateur (mail, MotDePasse, Role)
+INSERT INTO utilisateur (mail, motdepasse, role)
 VALUES
     ('JohnDoe@gmail.com', 'hashed_password_1', 'visiteur'),
     ('Alice@exemple.com', 'hashed_password_2', 'admin'),
     ('Bob@exemple.com', 'hashed_password_3', 'staff');
 
 -- Insertion des images
-INSERT INTO Image (nom_img, taille_img, type_img, blob_img)
+INSERT INTO image (nom_img, taille_img, type_img, blob_img)
 VALUES
     ('acdc.png', '500KB', 'image/png', null),
     ('blues.png', '300KB', 'image/png', null),
     ('imagesoiree1.png', '450KB', 'image/png', null);
 
 -- Insertion des spectacles
-INSERT INTO Spectacle (ID_Spectacle, Titre, Artiste, Duree, Style, video, description, ID_Img)
+INSERT INTO spectacle (id_spectacle, titre, artiste, duree, style, video, description, id_img)
 VALUES
     (1, 'Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'Concert de rock classique', 1),
     (2, 'Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2);
 
 -- Insertion des soirées
-INSERT INTO Soiree (ID_Soiree, Nom_soiree, Date, Nom_Lieu, tarif, thématique, ID_Img)
+INSERT INTO Soiree (id_soiree, nom_soiree, date, nom_Lieu, tarif, thématique, id_img)
 VALUES
     (1, 'Soirée 1', '2024-10-01', 'Nancy Arena', 25.00, 'Rock', 3),
     (2, 'Soirée 2', '2024-10-02', 'Le Zenith', 30.00, 'Blues', 3),
     (3, 'Soirée 3', '2024-10-03', 'La Lune', 20.00, 'Metal', 3);
 
 -- Insertion des relations SoireeToSpectacle
-INSERT INTO SoireeToSpectacle (ID_Soiree, ID_Spectacle)
+INSERT INTO soireetospectacle (id_soiree, id_spectacle)
 VALUES
     (1, 1), -- Rock Night dans la première soirée
     (1, 2), -- Blues Vibes dans la première soirée
