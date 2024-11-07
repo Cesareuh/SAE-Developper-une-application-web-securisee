@@ -19,9 +19,6 @@ class Dispatcher{
             case 'afficher-spectacle':
                 $a=(new action\AffichageSpectacleAction())->execute();
                 break;
-            case 'afficher-spectacle-simple':
-                $a=(new action\AffichageSpectacleSimple())->execute();
-                break;
             case 'afficher-liste-spectacle':
                 $a=(new action\AfficherListeSpectacleAction())->execute();
                 break;
