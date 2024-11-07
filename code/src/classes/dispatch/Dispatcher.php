@@ -47,6 +47,7 @@ class Dispatcher{
             <!doctype html>
             <head>
                 <title>NRV</title>
+                <link rel="stylesheet" type="text/css" href="style.css">
             </head>
             <body>
                 <div id="index">
