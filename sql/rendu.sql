@@ -62,7 +62,7 @@
 -- Table Soiree
 CREATE TABLE Soiree (
     ID_Soiree INT PRIMARY KEY,
-    Nom_soiree VARCHAR(50)
+    Nom_soiree VARCHAR(50),
     Date DATE NOT NULL,
     Nom_Lieu VARCHAR(100) NOT NULL,
     tarif DECIMAL(10, 2),

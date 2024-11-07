@@ -50,7 +50,7 @@ class Repository
     }
 
     public function trouveToutesSoirees():array{
-        $query=$this->pdo->prepare("SELECT * FROM `soirees`");
+        $query=$this->pdo->prepare("SELECT * FROM `soiree`");
         $query->execute();
         $list=[];
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
