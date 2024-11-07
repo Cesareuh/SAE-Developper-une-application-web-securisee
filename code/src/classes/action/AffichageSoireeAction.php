@@ -7,18 +7,18 @@ class AffichageSoireeAction extends Action
 
     public function execute(): string
     {
-        // Récupérer la connexion à la base de données
+
         $db = Database::getInstance()->getConnection();
 
-        // Préparer la requête SQL pour récupérer les soirées
+
         $sql = "SELECT ID_Soiree, Date, Nom_Lieu, tarif, thématique,image_soiree FROM Soiree";
         $stmt = $db->prepare($sql);
         $stmt->execute();
 
-        // Récupérer les résultats
+
         $soirees = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        // Construire le contenu HTML
+
         $html = "<h1>Liste des Soirées du Festival</h1><ul>";
         foreach ($soirees as $soiree) {
             $html .= "<li>";

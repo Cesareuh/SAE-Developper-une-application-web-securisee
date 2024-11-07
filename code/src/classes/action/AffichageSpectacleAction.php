@@ -9,19 +9,18 @@ class AffichageSpectacleAction extends Action
 
     public function execute(): string
     {
-        // Récupérer la connexion à la base de données
+
         $db = Database::getInstance()->getConnection();
 
-        // Préparer la requête SQL pour récupérer les spectacles
+
         $sql = "SELECT ID_Spectacle, Titre, Artiste, Duree, Style, video, photo, description FROM Spectacle";
         $stmt = $db->prepare($sql);
         $stmt->execute();
 
-        // Récupérer les résultats
         $spectacles = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        // Construire le contenu HTML
-        $html = "<h1>Liste des spectacles de la soirée</h1><ul>";
+
+        $html = "<h1>Presentation du spectacle</h1><ul>";
         foreach ($spectacles as $spectacle) {
             $html .= "<li>";
             $html .= "<strong>Titre :</strong> " . htmlspecialchars($spectacle['Titre']) . "<br>";
