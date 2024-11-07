@@ -14,7 +14,6 @@
     nom_img : Nom de l image.
     taille_img : Taille de l image (ex. 500KB).
     type_img : Type de l image (ex. image/png).
-    desc_img : Description de l image.
     blob_img : Données de l image au format binaire (BLOB).
 
 3. Soiree
@@ -30,7 +29,8 @@
     ID_Soiree : Référence vers une soirée spécifique (clé étrangère vers Soiree).
     ID_Spectacle : Référence vers un spectacle spécifique (clé étrangère vers Spectacle).
     Clé primaire : Combinaison de ID_Soiree et ID_Spectacle.
-    5. Utilisateur
+
+5. Utilisateur
     ID_Utilisateur : Identifiant unique pour chaque utilisateur (clé primaire).
     mail : Adresse email de l utilisateur.
     MotDePasse : Mot de passe haché de l utilisateur.
@@ -40,7 +40,7 @@
 
     ID_Spectacle → Titre, Artiste, Duree, Style, video, photo, description
 
-    Id_img → nom_img, taille_img, type_img, desc_img, blob_img
+    Id_img → nom_img, taille_img, type_img, blob_img
 
     ID_Soiree → Date, Nom_Soiree, Nom_Lieu, tarif, thématique, image_soiree
 
@@ -60,7 +60,7 @@
 
     Spectacle : Respecte la 3FN, car les attributs (Titre, Artiste, Duree, Style, video, photo, description) dépendent
                    uniquement de l identifiant primaire ID_Spectacle.
-    Image : Respecte la 3FN, car les attributs (nom_img, taille_img, type_img, desc_img, blob_img) dépendent uniquement
+    Image : Respecte la 3FN, car les attributs (nom_img, taille_img, type_img, blob_img) dépendent uniquement
                    de l identifiant primaire id_img.
     Soiree : Respecte la 3FN, car les attributs (Date, Nom_Soiree, Nom_Lieu, tarif, thématique, image_soiree) dépendent
                    uniquement de l identifiant primaire ID_Soiree.
@@ -82,7 +82,6 @@ CREATE TABLE Image (
                        nom_img VARCHAR(50) NOT NULL,
                        taille_img VARCHAR(25) NOT NULL,
                        type_img VARCHAR(25) NOT NULL,
-                       desc_img VARCHAR(100) NOT NULL,
                        blob_img BLOB NOT NULL,
                        PRIMARY KEY (id_img)
 );
@@ -137,11 +136,11 @@ VALUES
     ('Bob@exemple.com', 'hashed_password_3', 'staff');
 
 -- Insertion des images
-INSERT INTO Image (nom_img, taille_img, type_img, desc_img, blob_img)
+INSERT INTO Image (nom_img, taille_img, type_img, blob_img)
 VALUES
-    ('acdc.png', '500KB', 'image/png', 'Image de ACDC', null),
-    ('blues.png', '300KB', 'image/png', 'Image des Blues Brothers', null),
-    ('imagesoiree1.png', '450KB', 'image/png', 'Image pour soirée 1', null);
+    ('acdc.png', '500KB', 'image/png', null),
+    ('blues.png', '300KB', 'image/png', null),
+    ('imagesoiree1.png', '450KB', 'image/png', null);
 
 -- Insertion des spectacles
 INSERT INTO Spectacle (ID_Spectacle, Titre, Artiste, Duree, Style, video, description, ID_Img)
