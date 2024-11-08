@@ -54,12 +54,12 @@ class Repository
             $id=$row['id_spectacle'];
             $titre=$row['titre'];
             $artiste=$row['artiste'];
-            $duree=$row['duree'];
+            $duree =(int)$row['duree'];
             $style=$row['style'];
             $video=$row['video'];
-            $photo=$row['photo'];
+            $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $photo, $description);
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
             array_push($list, $spectacle);
         }
         return $list;
@@ -76,7 +76,7 @@ class Repository
             $lieu=$row['nom_lieu'];
             $tarif=$row['tarif'];
             $thematique=$row['thematique'];
-            $image=$row['image_soiree'];
+            $image=$row['id_img'];
             $soiree=new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image);
             array_push($list, $soiree);
         }
