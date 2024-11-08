@@ -8,7 +8,7 @@ class CreerSoireeAction extends Action
         if($this->http_method === 'GET'){
 			return <<<END
         <form id="form" method="post" action="?action=add-soiree">
-        <label>Nom playlist:
+        <label>Nom soirée:
         <input type="text" name="nom_soiree" placeholder="nom de la soirée"/>
         </label>
         </form>
