@@ -59,7 +59,7 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo);
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
             array_push($list, $spectacle);
         }
         return $list;
@@ -160,51 +160,16 @@ class Repository
         return null;
     }
 
-    public function trouverSpectaclesFiltre(?string $date, ?string $lieu, ?string $style): array {
-        $query = "
-            SELECT spectacle.id_spectacle, titre, artiste, duree, style, nom_lieu, date, spectacle.id_img, description, video
-            FROM spectacle 
-            JOIN soireetospectacle ON spectacle.id_spectacle = soireetospectacle.id_spectacle
-            JOIN soiree ON soireetospectacle.id_soiree = soiree.id_soiree
-            WHERE 1=1
-        ";
-        $params = [];
-
-
-        if ($date) {
-            $query .= " AND date_spectacle = :date";
-            $params[':date'] = $date;
-        }
-
-        if ($lieu) {
-            $query .= " AND lieu = :lieu";
-            $params[':lieu'] = $lieu;
-        }
-
-        if ($style) {
-            $query .= " AND style = :style";
-            $params[':style'] = $style;
-        }
-
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-
-
-        // Récupération des résultats
-        $result = [];
-        while ($row = $stmt->fetch()) {
-            $result[] = new Spectacle(
-                $row['id_spectacle'],
-                $row['titre'],
-                $row['artiste'],
-                (int)$row['duree'],
-                $row['style'],
-                $row['video'],
-                $row['description'],
-                $row['id_img']);
-        }
-
-        return $result;
+    public function trouverSpectaclesParLieu($lieu): array
+    {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM spectacle
+             JOIN soireetospectacle ON spectacle.id_spectacle = soireetospectacle.id_spectacle
+             JOIN soiree ON soiree.id_soiree = soireetospectacle.id_soiree
+             WHERE soiree.nom_lieu = ?"
+        );
+        $query->execute([$lieu]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }
