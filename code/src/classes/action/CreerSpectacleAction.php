@@ -13,7 +13,7 @@ class CreerSpectacleAction extends Action
     {
         if($this->http_method === 'GET'){
 			return <<<END
-			<h1>Ajouter un spectacle :</h1>
+			<h3>Ajouter un spectacle :</h3>
 			    <form id="form" method="post" action="?action=creer-spectacle" enctype="multipart/form-data">
 				<label> Titre :</label>
 				<input type="text" name="titre" placeholder="titre"/>
@@ -27,6 +27,8 @@ class CreerSpectacleAction extends Action
 				<input type="file" name="photo" placeholder="image du spectacle" accept=".png, .jpeg, .jpg"/>
 				<label> Video :</label>
 				<input type="text" name="video" placeholder="video de présentation"/>
+				<label> Description :</label>
+				<input type="text" name="description" placeholder="description de l'article"/>
 				<button type="submit" form="form"> Valider </button>
 				</form>
 			END;
