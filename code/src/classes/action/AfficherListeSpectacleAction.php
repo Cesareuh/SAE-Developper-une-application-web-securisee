@@ -2,34 +2,25 @@
 
 namespace iutnc\nrv\action;
 
-use iutnc\nrv\db\Database;
+use iutnc\nrv\repository\Repository;
 
 class AfficherListeSpectacleAction extends Action
 {
-
     public function execute(): string {
+        // Retrieve all spectacles using the repository method
+        $spectacles = Repository::getInstance()->trouveTousSpectacles();
 
-        $db = Database::getInstance()->getConnection();
-
-        // Requête SQL pour récupérer les informations des spectacles
-        $sql = "SELECT ID_Spectacle, Titre, Artiste, Duree, Style FROM Spectacle";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-
-        $spectacles = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        // Générer le HTML pour afficher la liste des spectacles
-        $html = "<h1>Liste des Spectacles de la Soirée</h1><ul>";
+        // Generate the HTML output
+        $html = "<h1>Liste des Spectacles</h1><ul>";
         foreach ($spectacles as $spectacle) {
             $html .= "<li>";
-            $html .= "<p><strong>Titre :</strong> " . htmlspecialchars($spectacle['Titre']) . "</p>";
-            $html .= "<p><strong>Artiste :</strong> " . htmlspecialchars($spectacle['Artiste']) . "</p>";
-            $html .= "<p><strong>Durée :</strong> " . htmlspecialchars($spectacle['Duree']) . "</p>";
-            $html .= "<p><strong>Style :</strong> " . htmlspecialchars($spectacle['Style']) . "</p>";
+            $html .= "<p><strong>Titre :</strong> " . htmlspecialchars($spectacle->getTitre()) . "</p>";
+            $html .= "<p><strong>Artiste :</strong> " . htmlspecialchars($spectacle->getArtiste()) . "</p>";
+            $html .= "<p><strong>Durée :</strong> " . htmlspecialchars($spectacle->getDuree()) . " minutes</p>";
+            $html .= "<p><strong>Style :</strong> " . htmlspecialchars($spectacle->getStyle()) . "</p>";
 
-            // Option pour un lien vers plus de détails
-            $html .= "<a href='?action=afficher_spectacle&id=" . urlencode($spectacle['ID_Spectacle']) . "'>Voir les détails</a>";
-
+            // Link to view the spectacle details
+            $html .= "<a href='?action=afficher_spectacle&id=" . urlencode($spectacle->getId()) . "'>Voir les détails</a>";
             $html .= "</li><br>";
         }
         $html .= "</ul>";

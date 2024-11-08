@@ -29,28 +29,44 @@ class Repository
         }
         self::$config = [ 'dsn'=> $conf['dsn'],'user'=> $conf['user'],'pass'=> $conf['pass'] ];
     }
+    public function trouveToutesSoireesAvecImages(): array {
+        $query = $this->pdo->prepare(
+            "SELECT soiree.id_soiree, soiree.date, soiree.nom_lieu, soiree.tarif, soiree.thematique, 
+                   image.nom_img, image.desc_img
+                   FROM soiree
+                   LEFT JOIN image ON soiree.id_img = image.id_img"
+        );
+        $query->execute();
+
+        $soirees = [];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $soirees[] = $row;
+        }
+        return $soirees;
+    }
+
 
     public function trouveTousSpectacles(): array{
-        $query=$this->pdo->prepare("SELECT * FROM `spectacle`");
+        $query=$this->pdo->prepare("SELECT * FROM spectacle");
         $query->execute();
         $list=[];
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
             $id=$row['id_spectacle'];
             $titre=$row['titre'];
             $artiste=$row['artiste'];
-            $duree=$row['duree'];
+            $duree =(int)$row['duree'];
             $style=$row['style'];
             $video=$row['video'];
-            $photo=$row['photo'];
+            $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $photo, $description);
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
             array_push($list, $spectacle);
         }
         return $list;
     }
 
     public function trouveToutesSoirees():array{
-        $query=$this->pdo->prepare("SELECT * FROM `soiree`");
+        $query=$this->pdo->prepare("SELECT * FROM soiree");
         $query->execute();
         $list=[];
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
@@ -60,7 +76,7 @@ class Repository
             $lieu=$row['nom_lieu'];
             $tarif=$row['tarif'];
             $thematique=$row['thematique'];
-            $image=$row['image_soiree'];
+            $image=$row['id_img'];
             $soiree=new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image);
             array_push($list, $soiree);
         }
@@ -97,4 +113,51 @@ class Repository
         $stmt->bindParam(2, $idSpectacle);
         $stmt->execute();
     }
+
+    public function afficherSoiree(int $idSoiree): ?Soiree {
+        $query = $this->pdo->prepare("SELECT * FROM soiree WHERE id_soiree = :id");
+        $query->bindParam(':id', $idSoiree, PDO::PARAM_INT);
+        $query->execute();
+
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $id = $row['id_soiree'];
+            $nom = $row['nom_soiree'];
+            $date = $row['date'];
+            $lieu = $row['nom_lieu'];
+            $tarif = $row['tarif'];
+            $thematique = $row['thematique'];
+            $image = $row['image_soiree'];
+
+            return new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image);
+        }
+        return null;
+    }
+
+    public function afficherSpectacle(int $idSpectacle): ?Spectacle {
+
+        $query = $this->pdo->prepare("SELECT * FROM spectacle WHERE id_spectacle = :id");
+        $query->bindParam(':id', $idSpectacle, PDO::PARAM_INT);
+        $query->execute();
+
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+
+            return new Spectacle(
+                $row['id_spectacle'],
+                $row['titre'],
+                $row['artiste'],
+                $row['duree'],
+                $row['style'],
+                $row['video'],
+                $row['photo'],
+                $row['description']
+            );
+        }
+
+        return null;
+    }
+
 }
