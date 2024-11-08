@@ -160,16 +160,10 @@ class Repository
         return null;
     }
 
-    public function trouverSpectaclesParLieu($lieu): array
+    public function getSpectacleById(int $idSpectacle)
     {
-        $query = $this->pdo->prepare(
-            "SELECT * FROM spectacle
-             JOIN soireetospectacle ON spectacle.id_spectacle = soireetospectacle.id_spectacle
-             JOIN soiree ON soiree.id_soiree = soireetospectacle.id_soiree
-             WHERE soiree.nom_lieu = ?"
-        );
-        $query->execute([$lieu]);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->pdo->prepare("SELECT * FROM spectacles WHERE id = ?");
+        $query->execute([$idSpectacle]);
+        return $query->fetchObject();
     }
-
 }
