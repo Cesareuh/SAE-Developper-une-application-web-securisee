@@ -123,7 +123,7 @@ CREATE TABLE soireetospectacle (
                                    id_spectacle INT,
                                    PRIMARY KEY (id_soiree, id_spectacle),
                                    FOREIGN KEY (id_soiree) REFERENCES soiree(id_soiree),
-                                   FOREIGN KEY (id_sSpectacle) REFERENCES spectacle(id_spectacle)
+                                   FOREIGN KEY (id_spectacle) REFERENCES spectacle(id_spectacle)
 );
 
 
