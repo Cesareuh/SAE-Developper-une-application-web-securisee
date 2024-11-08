@@ -152,8 +152,8 @@ class Repository
                 $row['duree'],
                 $row['style'],
                 $row['video'],
-                $row['photo'],
-                $row['description']
+                $row['description'],
+                $row['id_img']
             );
         }
 
@@ -166,4 +166,14 @@ class Repository
         $query->execute([$idSpectacle]);
         return $query->fetchObject();
     }
+
+	public function getImageById(int $id_img){
+		$query = $this->pdo->prepare("select * from image where id_img like :id");
+		$query->bindParam(":id", $id_img);
+		$query->execute();
+
+		return $query->fetch(PDO::FETCH_ASSOC)["blob_img"];
+
+	}
+
 }
