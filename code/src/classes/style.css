@@ -1,6 +1,7 @@
 * {
 	font-family: 'Source Sans Pro', 'Roboto', sans-serif;
 	color: #f0f0f0;
+	font-size: 1em;
 }
 
 body{
@@ -39,8 +40,35 @@ button:active {
   transform: scale(0.95);
 }
 
-body, .bas{
-	background-color: #00001eff;
+body, .bas, select, input{
+	background-color: #00001e;
+}
+
+#index {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+select, input {
+	border-radius: 5px;
+	border: 2px solid  #f09819;
+}
+
+form {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+form, button{
+	padding: 8px 10px;
+}
+
+form *{
+	margin: 0 10px;
 }
 
 .bg{
@@ -93,11 +121,6 @@ body, .bas{
 	justify-content: space-around;
 }
 
-@media (max-width: 1000px) {
-  .presentation {
-    flex-direction: column;
-  }
-}
 
 .infos{
 	display: flex;
@@ -130,6 +153,20 @@ h2{
 }
 
 h1, h3{
-	color: #FF5F1F;
+	/* color: #f09819; */
+	background: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
+@media (max-width: 1000px) {
+  .presentation {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 650px) {
+  #index, form{
+    flex-direction: column;
+  }
+}

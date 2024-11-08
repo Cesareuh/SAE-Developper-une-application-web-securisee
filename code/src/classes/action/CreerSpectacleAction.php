@@ -15,24 +15,20 @@ class CreerSpectacleAction extends Action
 			return <<<END
 			<h3>Ajouter un spectacle :</h3>
 			    <form id="form" method="post" action="?action=creer-spectacle" enctype="multipart/form-data">
-				<label> Titre : 
+				<label> Titre :</label>
 				<input type="text" name="titre" placeholder="titre"/>
-				</label>
-				<label> Style :
+				<label> Style :</label>
 				<input type="text" name="style" placeholder="style"/>
-				</label>
-				<label> Duree :
+				<label> Duree :</label>
 				<input type="number" name="duree" placeholder="duree"/>
-				</label>
-				<label> Artiste :
+				<label> Artiste :</label>
 				<input type="text" name="artiste" placeholder="nom de l'artiste"/>
-				</label>
-				<label> Photo :
+				<label> Photo :</label>
 				<input type="file" name="photo" placeholder="image du spectacle" accept=".png, .jpeg, .jpg"/>
-				</label>
-				<label> Video :
+				<label> Video :</label>
 				<input type="text" name="video" placeholder="video de présentation"/>
-				</label>
+				<label> Description :</label>
+				<input type="text" name="description" placeholder="description de l'article"/>
 				<button type="submit" form="form"> Valider </button>
 				</form>
 			END;
