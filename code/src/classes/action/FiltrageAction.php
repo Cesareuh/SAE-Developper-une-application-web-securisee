@@ -32,13 +32,11 @@ class FiltrageAction extends Action
                 $res = <<<END
                     <ul>
                         <li>
-                        <p><strong>Titre :</strong>{$spectacle->getTitre()}</p>
-                        <p><strong>Artiste :</strong>{$spectacle->getArtiste()}</p>
-                        <p><strong>Durée :</strong>{$spectacle->getDuree()} minutes</p>
-                        <p><strong>Style :</strong>{$spectacle->getStyle()}</p>
-                        <p><strong>Lieu :</strong>{$spectacle->getLieu()}</p>
-                        <p><strong>Date :</strong>{$spectacle->getDate()}</p>
-                        <a href='?action=afficher_spectacle&id=urlencode({$spectacle->getId()})'>Voir les détails</a>
+                        <p><strong>Titre :</strong>{$spectacle->__get('titre')}</p>
+                        <p><strong>Artiste :</strong>{$spectacle->__get('artiste')}</p>
+                        <p><strong>Durée :</strong>{$spectacle->__get('duree')} minutes</p>
+                        <p><strong>Style :</strong>{$spectacle->__get('style')}</p>
+                        <a href='?action=afficher_spectacle&id=urlencode({$spectacle->__get('id')})'>Voir les détails</a>
                         </li><br>
                     </ul>
                     END;
