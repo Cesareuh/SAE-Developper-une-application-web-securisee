@@ -14,11 +14,12 @@ class AjouterSpectacleAction extends Action
             $lSpectacle = $repo->trouveTousSpectacles();
             $lSoiree = $repo->trouveToutesSoirees();
             $res=<<<END
-                <form method="POST" action="?action=ajouter-spectacle">
-                <label>Soiree</label>
-                    <select name="soiree"> 
-                        <option value='' selected>choisissez une soiree</option>               
-            END;
+<h1>Ajouter un spectacle à une soirée :</h1>
+<form method="POST" action="?action=ajouter-spectacle">
+<label>Soiree</label>
+<select name="soiree" /> 
+<option value='' selected>choisissez une soiree</option>
+END;
             foreach ($lSoiree as $soiree) {
                 $res.=<<<END
                         <option value="{$soiree->__get('id')}">{$soiree->__get('nom')}</option>
