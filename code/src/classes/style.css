@@ -92,7 +92,6 @@ form *{
 	justify-content: center;
 	align-items: center;
 	margin: 0 0 -8px 0 ;
-	/* background-color: yellow; */
 }
 
 .photo_profil{
@@ -157,6 +156,10 @@ h1, h3{
 	background: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+a {
+	text-decoration: none;
 }
 
 @media (max-width: 1000px) {
