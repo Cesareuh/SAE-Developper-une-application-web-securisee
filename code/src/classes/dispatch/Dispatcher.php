@@ -34,6 +34,9 @@ class Dispatcher{
             case 'creer-spectacle':
                 $a=(new action\CreerSpectacleAction())->execute();
                 break;
+            case 'afficher-liste-soiree':
+                $a=(new action\AfficherListeSoireeAction())->execute();
+                break;
             default :
                 $a='Index';
                 break;
