@@ -59,7 +59,7 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
+            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo);
             array_push($list, $spectacle);
         }
         return $list;
@@ -92,7 +92,7 @@ class Repository
         $duree=$spectacle->__get('duree');
         $style=$spectacle->__get('style');
         $video=$spectacle->__get('video');
-        $photo=$spectacle->__get('photo-artiste');
+        $photo=$spectacle->__get('id_img');
         $description=$spectacle->__get('description');
         $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $titre);
@@ -100,8 +100,8 @@ class Repository
         $stmt->bindParam(4, $duree);
         $stmt->bindParam(5, $style);
         $stmt->bindParam(6, $video);
-        $stmt->bindParam(7, $photo);
-        $stmt->bindParam(8, $description);
+        $stmt->bindParam(7, $description);
+        $stmt->bindParam(8, $photo);
         $stmt->execute();
     }
 
@@ -112,6 +112,20 @@ class Repository
         $stmt->bindParam(1, $idSoiree);
         $stmt->bindParam(2, $idSpectacle);
         $stmt->execute();
+    }
+
+    public function ajouterImage(String $img, String $nom, String $type, int $taille):int{
+        $img_blob=file_get_contents($img);
+        $id=0;
+        $stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?)');
+        $stmt->bindParam(1, $id);
+        $stmt->bindParam(2, $nom);
+        $stmt->bindParam(3, $taille);
+        $stmt->bindParam(4, $type);
+        $stmt->bindParam(5, $img_blob);
+        $stmt->execute();
+        $id=$this->pdo->lastInsertId();
+        return $id;
     }
 
     public function afficherSoiree(int $idSoiree): ?Soiree {
@@ -165,6 +179,7 @@ class Repository
         $query = $this->pdo->prepare("SELECT * FROM spectacles WHERE id = ?");
         $query->execute([$idSpectacle]);
         return $query->fetchObject();
+
     }
 
 
