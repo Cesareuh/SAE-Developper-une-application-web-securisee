@@ -76,7 +76,6 @@
 6. Script SQL pour Créer les Tables et Insérer des Données
 
 
-
 DROP TABLE IF EXISTS soireetospectacle;
 DROP TABLE IF EXISTS spectacle;
 DROP TABLE IF EXISTS soiree;

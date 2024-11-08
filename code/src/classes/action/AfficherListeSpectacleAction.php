@@ -7,10 +7,9 @@ use iutnc\nrv\repository\Repository;
 class AfficherListeSpectacleAction extends Action
 {
     public function execute(): string {
-        // Retrieve all spectacles using the repository method
         $spectacles = Repository::getInstance()->trouveTousSpectacles();
 
-        // Generate the HTML output
+        
         $html = "<h1>Liste des Spectacles</h1><ul>";
         foreach ($spectacles as $spectacle) {
             $html .= "<li>";
