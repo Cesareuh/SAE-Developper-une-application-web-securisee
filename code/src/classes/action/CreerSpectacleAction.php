@@ -48,9 +48,9 @@ class CreerSpectacleAction extends Action
                 ];
                 $d=(int)$_POST['duree'];
                 $id_img=$repo->ajouterImage($_FILES['photo']['tmp_name'], $_FILES['photo']['name'], $_FILES['photo']['type'], $_FILES['photo']['size']);
-                $_FILES(['photo'],['size']);
 
-                $at = new Spectacle(0, $infos['titre'], $infos['artiste'], $id_img, $d, $infos['style'], "zzz", $infos['video']);
+
+                $at = new Spectacle(0, $infos['titre'], $infos['artiste'], $d, $infos['style'], $infos['video'], "zzz", $id_img);
                 $repo->ajouterSpectacle($at);
 
                 return "<div>Spectacle ajouté</div>";

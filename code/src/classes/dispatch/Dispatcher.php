@@ -54,6 +54,8 @@ class Dispatcher{
                     <a href="index.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soirée</button></a>
                     <a href="index.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
                     <a href="index.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
+                    <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
+                   
                 </div>
                 $html
             </body>
