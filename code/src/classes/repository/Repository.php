@@ -74,7 +74,7 @@ class Repository
             $id=$row['id_soiree'];
             $nom=$row['nom_soiree'];
             $date=$row['date'];
-            $lieu=$row['nom_lieu'];
+            $lieu=$row['id_lieu'];
             $tarif=$row['tarif'];
             $thematique=$row['thematique'];
             $image=$row['id_img'];
@@ -127,7 +127,7 @@ class Repository
             $id = $row['id_soiree'];
             $nom = $row['nom_soiree'];
             $date = $row['date'];
-            $lieu = $row['nom_lieu'];
+            $lieu = $row['id_lieu'];
             $tarif = $row['tarif'];
             $thematique = $row['thematique'];
             $image = $row['id_img'];
