@@ -3,6 +3,7 @@
 namespace iutnc\nrv\action;
 
 use iutnc\nrv\repository\Repository;
+use PDOException;
 
 class AjouterSpectacleAction extends Action
 {
@@ -42,9 +43,14 @@ class AjouterSpectacleAction extends Action
                 </form>
                 END;
         }else if($this->http_method == "POST"){
-            echo $_POST["soiree"];
-            $repo->ajouterSpectacleToSoiree($_POST['soiree'], $_POST['spectacle']);
-            $res="<p>Le spectacle {$_POST['spectacle']->__get('titre')} à était ajouté à la soirée {$_POST['soiree']->__get('nom')}</p>";
+            $spect = $repo->afficherSpectacle($_POST["spectacle"]);
+            $soir = $repo->afficherSoiree($_POST["soiree"]);
+            try {
+                $repo->ajouterSpectacleToSoiree($soir, $spect);
+            }catch (PDOException $e){
+                return "lien déjà existant";
+            }
+            $res="<p>Le spectacle {$spect->__get('titre')} à était ajouté à la soirée {$soir->__get('nom')}</p>";
         }else{
             $res="<p>Type de requete incorecte</p>";
         }

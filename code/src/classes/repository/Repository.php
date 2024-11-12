@@ -5,6 +5,7 @@ namespace iutnc\nrv\repository;
 use iutnc\nrv\evenement\Soiree;
 use iutnc\nrv\evenement\Spectacle;
 use PDO;
+use PDOException;
 
 class Repository
 {
@@ -105,13 +106,14 @@ class Repository
         $stmt->execute();
     }
 
-    public function ajouterSpectacleToSoiree(Spectacle $spectacle, Soiree $soiree){
+    public function ajouterSpectacleToSoiree(Soiree $soiree, Spectacle $spectacle){
         $idSpectacle=$spectacle->__get('id');
         $idSoiree=$soiree->__get('id');
         $stmt=$this->pdo->prepare('insert into soireetospectacle values (?,?)');
         $stmt->bindParam(1, $idSoiree);
         $stmt->bindParam(2, $idSpectacle);
         $stmt->execute();
+
     }
 
     public function afficherSoiree(int $idSoiree): ?Soiree {
@@ -128,7 +130,7 @@ class Repository
             $lieu = $row['nom_lieu'];
             $tarif = $row['tarif'];
             $thematique = $row['thematique'];
-            $image = $row['image_soiree'];
+            $image = $row['id_img'];
 
             return new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image);
         }
