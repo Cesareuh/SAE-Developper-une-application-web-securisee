@@ -7,7 +7,6 @@ class Spectacle
     protected int $id, $duree, $id_img;
     protected string $titre, $artiste, $style, $description, $video, $statut;
     protected ?int $id_img_bg = null; // Autoriser null pour id_img_bg
-
     public function __construct($id, $titre, $artiste, $duree, $style, $video, $description, $id_img, $statut)
     {
         $id = (int)$id;
