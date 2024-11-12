@@ -170,14 +170,14 @@ class Repository {
         return $query->fetchObject();
     }
 
-	public function getImageById(int $id_img):mixed{
-		$query = $this->pdo->prepare("select * from image where id_img like :id");
-		$query->bindParam(":id", $id_img);
-		$query->execute();
+    public function getImageById(int $id_img):mixed{
+        $query = $this->pdo->prepare("select * from image where id_img like :id");
+        $query->bindParam(":id", $id_img);
+        $query->execute();
 
-		return $query->fetch(PDO::FETCH_ASSOC)["blob_img"];
+        return $query->fetch(PDO::FETCH_ASSOC)["blob_img"];
 
-	}
+    }
 
     // Vérifie si un utilisateur existe déjà par son email
     public static function trouverUtilisateurParMail(string $email): ?array
@@ -225,13 +225,13 @@ class Repository {
         $query = "SELECT * FROM spectacle WHERE $filtre = :valeur";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['valeur' => $valeur]);
-        
+
         // Récupérer tous les spectacles
         $spectacles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         // Créer une liste vide de spectacles
         $list = [];
-        
+
         // Parcours des résultats de la requête et création des objets Spectacle
         foreach ($spectacles as $row) {
             $id = $row['id_spectacle'];
@@ -246,10 +246,10 @@ class Repository {
             $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
             array_push($list, $spectacle);
         }
-        
+
         return $list;
     }
-    
+
     public function trouveTousLieux():array{
         $query= $this->pdo->prepare("SELECT * FROM lieu");
         $query->execute();
@@ -294,28 +294,12 @@ class Repository {
         $query->execute();
     }
 
-<<<<<<< HEAD
-	public function getImageBgId(int $id_img):mixed{
-		$query = $this->pdo->prepare("select id_img_bckgrnd from image where id_img = :id");
-		$query->bindParam(":id", $id_img);
-		$query->execute();
-		return $query->fetch(\PDO::FETCH_ASSOC)['id_img_bckgrnd'];
-	}
-
-    public function userExists($email): bool {
-        $stmt = $this->pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        return $stmt->rowCount() > 0;
-    }
-
-=======
-	public function getImageBgId(int $id_img): mixed {
+    public function getImageBgId(int $id_img): mixed {
         $query = $this->pdo->prepare("SELECT id_img_bckgrnd FROM image WHERE id_img = :id");
         $query->bindParam(":id", $id_img);
         $query->execute();
-    
+
         $result = $query->fetch(\PDO::FETCH_ASSOC);
         return $result ? $result['id_img_bckgrnd'] : null;
     }
->>>>>>> 8b69ad8468b36683a150a202693701c314a38426
 }
