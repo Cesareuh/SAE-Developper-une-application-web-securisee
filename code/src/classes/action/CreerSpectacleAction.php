@@ -19,7 +19,7 @@ class CreerSpectacleAction extends Action
 				<input type="text" name="titre" placeholder="titre"/>
 				<label> Style :</label>
 				<input type="text" name="style" placeholder="style"/>
-				<label> Duree :</label>
+				<label> Duree en min:</label>
 				<input type="number" name="duree" placeholder="duree"/>
 				<label> Artiste :</label>
 				<input type="text" name="artiste" placeholder="nom de l'artiste"/>
