@@ -60,7 +60,6 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-
             $statut=$row['statut'];
             $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
             array_push($list, $spectacle);
@@ -264,6 +263,12 @@ class Repository
 		$query->execute();
 		return $query->fetch(\PDO::FETCH_ASSOC)['id_img_bckgrnd'];
 	}
+
+    public function userExists($email): bool {
+        $stmt = $this->pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->rowCount() > 0;
+    }
 
 
 }
