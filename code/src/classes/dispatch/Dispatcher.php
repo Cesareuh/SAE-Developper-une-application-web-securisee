@@ -67,7 +67,7 @@ class Dispatcher{
                     <a href="index.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
                     <a href="index.php?action=inscription-action"><button type="button">S'inscrire</button></a>
-                    <a href="index.php?action=afficherlistespectacleaction"><button type="button">afficher liste spectacle</button></a>
+                    <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
                     <a href="index.php?action=filtre"><button type="button">Filtrer</button></a>
                 </div>
                 $html
