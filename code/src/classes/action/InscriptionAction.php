@@ -41,7 +41,7 @@ class InscriptionAction extends Action
 
                 // Démarrer une session et connecter l'utilisateur automatiquement après l'inscription
                 session_start();
-                $_SESSION['user'] = $mail;
+                $_SESSION['utilisateur'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil
                 header('Location: /accueil');
@@ -55,7 +55,7 @@ class InscriptionAction extends Action
         // Si la méthode HTTP n'est pas POST, afficher le formulaire d'inscription
         $html = "
             <h1>Inscription</h1>
-            <form method='POST' action='/inscription'>
+            <form method='POST' action='?action=inscription-action '>
                 <label for='mail'>Email :</label>
                 <input type='email' name='mail' required><br>
                 <label for='password'>Mot de passe :</label>

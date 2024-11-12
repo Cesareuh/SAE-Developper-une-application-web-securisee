@@ -188,11 +188,13 @@ class Repository
     }
 
     // Crée un nouvel utilisateur dans la base de données
-    public static function creerUtilisateur(string $email, string $hashedPassword, string $role): void
+    public static function creerUtilisateur(string $email, string $hashedPassword): void
     {
         $pdo = Database::getConnection();
-        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, ?)");
-        $stmt->execute([$email, $hashedPassword, $role]);
+
+        // On fixe le rôle à 'visiteur' par défaut
+        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
+        $stmt->execute([$email, $hashedPassword]);
     }
 
     public function ajouterImage(String $img, String $nom, String $type, int $taille, mixed $id_bg):int{
