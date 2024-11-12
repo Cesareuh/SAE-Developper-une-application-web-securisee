@@ -7,8 +7,7 @@ use iutnc\nrv\evenement\Spectacle;
 use PDO;
 use PDOException;
 
-class Repository
-{
+class Repository {
     private \PDO $pdo;
     private static ?Repository $instance = null;
     private static array $config = [ ];
@@ -214,6 +213,43 @@ class Repository
         return $id;
     }
 
+    public function trouveOptionsPourFiltre(string $filtre): array {
+        $query = "SELECT DISTINCT $filtre FROM spectacle";
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+    public function trouveSpectaclesFiltres(string $filtre, string $valeur): array {
+        // Construire la requête dynamique pour le filtre
+        $query = "SELECT * FROM spectacle WHERE $filtre = :valeur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['valeur' => $valeur]);
+        
+        // Récupérer tous les spectacles
+        $spectacles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Créer une liste vide de spectacles
+        $list = [];
+        
+        // Parcours des résultats de la requête et création des objets Spectacle
+        foreach ($spectacles as $row) {
+            $id = $row['id_spectacle'];
+            $titre = $row['titre'];
+            $artiste = $row['artiste'];
+            $duree = (int) $row['duree'];
+            $style = $row['style'];
+            $video = $row['video'];
+            $photo = $row['id_img'];
+            $description = $row['description'];
+            $statut=$row['statut'];
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
+            array_push($list, $spectacle);
+        }
+        
+        return $list;
+    }
+    
     public function trouveTousLieux():array{
         $query= $this->pdo->prepare("SELECT * FROM lieu");
         $query->execute();
@@ -258,6 +294,7 @@ class Repository
         $query->execute();
     }
 
+<<<<<<< HEAD
 	public function getImageBgId(int $id_img):mixed{
 		$query = $this->pdo->prepare("select id_img_bckgrnd from image where id_img = :id");
 		$query->bindParam(":id", $id_img);
@@ -271,4 +308,14 @@ class Repository
         return $stmt->rowCount() > 0;
     }
 
+=======
+	public function getImageBgId(int $id_img): mixed {
+        $query = $this->pdo->prepare("SELECT id_img_bckgrnd FROM image WHERE id_img = :id");
+        $query->bindParam(":id", $id_img);
+        $query->execute();
+    
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return $result ? $result['id_img_bckgrnd'] : null;
+    }
+>>>>>>> 8b69ad8468b36683a150a202693701c314a38426
 }
