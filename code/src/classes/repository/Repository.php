@@ -60,12 +60,9 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-<<<<<<< HEAD
+
             $statut=$row['statut'];
             $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
-=======
-            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo);
->>>>>>> b90bc89af80cda8348be0f4c8a2417157c9a9ecd
             array_push($list, $spectacle);
         }
         return $list;
@@ -253,7 +250,7 @@ class Repository
         $query->execute();
     }
 
-<<<<<<< HEAD
+
     public function annulerSpectacle(int $idSpectacle): void
     {
         $query = $this->pdo->prepare("UPDATE spectacle SET statut = 'annulé' WHERE id_spectacle = :id");
@@ -261,15 +258,12 @@ class Repository
         $query->execute();
     }
 
-
-
-=======
 	public function getImageBgId(int $id_img):mixed{
 		$query = $this->pdo->prepare("select id_img_bckgrnd from image where id_img = :id");
 		$query->bindParam(":id", $id_img);
 		$query->execute();
 		return $query->fetch(\PDO::FETCH_ASSOC)['id_img_bckgrnd'];
 	}
->>>>>>> b90bc89af80cda8348be0f4c8a2417157c9a9ecd
+
 
 }
