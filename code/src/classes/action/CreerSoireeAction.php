@@ -11,6 +11,9 @@ class CreerSoireeAction extends Action
 		<form id="form" method="post" action="?action=add-soiree">
 		<label>Nom soirée:</label>
 		<input type="text" name="nom_soiree" placeholder="nom de la soirée"/>
+		<Label>Date:</Label>
+		<input type="date" name="date_soiree"/>
+		<Label></Label>
 		<button type="submit" form="form" value="Valider">Valider</button>
 		</form>
 END;
