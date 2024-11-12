@@ -20,7 +20,6 @@ class AuthentificationAction extends Action
                 AuthnProvider::signin($mail, $password);
 
                 //  démarre une session si l'auth marche
-                session_start();
                 $_SESSION['user'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil ou une page protégée

@@ -41,7 +41,6 @@ class InscriptionAction extends Action
                 $repo->creerUtilisateur($mail, $hashedPassword, $role);
 
                 // Démarrer une session et connecter l'utilisateur automatiquement après l'inscription
-                session_start();
                 $_SESSION['utilisateur'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil
