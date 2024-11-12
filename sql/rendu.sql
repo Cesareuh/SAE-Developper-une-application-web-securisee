@@ -107,6 +107,7 @@ CREATE TABLE lieu (
 );
 
 -- Table Spectacle
+-- Table Spectacle
 CREATE TABLE spectacle (
                            id_spectacle INT NOT NULL AUTO_INCREMENT,
                            titre VARCHAR(100) NOT NULL,
@@ -116,7 +117,7 @@ CREATE TABLE spectacle (
                            video VARCHAR(500),
                            description VARCHAR(10000),
                            id_img INT,
-                           statut ENUM('confirmé', 'annulé') DEFAULT 'confirmé'
+                           statut ENUM('confirmé', 'annulé') DEFAULT 'confirmé',
                            PRIMARY KEY (id_spectacle),
                            FOREIGN KEY (id_img) REFERENCES image(id_img) ON DELETE SET NULL
 );
@@ -145,47 +146,47 @@ CREATE TABLE soireetospectacle (
 );
 
 -- Table Utilisateur
-CREATE TABLE Utilisateur (
-                             ID_Utilisateur INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE utilisateur (
+                             id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
                              mail VARCHAR(100) UNIQUE NOT NULL,
-                             MotDePasse VARCHAR(255) NOT NULL,
-                             Role ENUM('visiteur', 'staff', 'admin', 'organisateur') DEFAULT 'visiteur'
+                             motdepasse VARCHAR(255) NOT NULL,
+                             role ENUM('visiteur', 'staff', 'admin', 'organisateur') DEFAULT 'visiteur'
 );
 
 
 -- Insertion des utilisateurs
 INSERT INTO utilisateur (mail, motdepasse, role) VALUES
-    ('JohnDoe@gmail.com', 'hashed_password_1', 'visiteur'),
-    ('Alice@exemple.com', 'hashed_password_2', 'admin'),
-    ('Bob@exemple.com', 'hashed_password_3', 'staff');
+                                                     ('JohnDoe@gmail.com', 'hashed_password_1', 'visiteur'),
+                                                     ('Alice@exemple.com', 'hashed_password_2', 'admin'),
+                                                     ('Bob@exemple.com', 'hashed_password_3', 'staff');
 
 -- Insertion des images
 INSERT INTO image (nom_img, taille_img, type_img, blob_img, id_img_bckgrnd) VALUES
-    ('rocknight.jpg', '2MB', 'image/jpeg', null, null),
-    ('bluesvibes.jpg', '1.5MB', 'image/jpeg', null, null),
-    ('soiree.jpg', '3MB', 'image/jpeg', null, null);
+                                                                                ('rocknight.jpg', '2MB', 'image/jpeg', null, null),
+                                                                                ('bluesvibes.jpg', '1.5MB', 'image/jpeg', null, null),
+                                                                                ('soiree.jpg', '3MB', 'image/jpeg', null, null);
 
 -- Insertion des lieux
 INSERT INTO lieu (nom_lieu, adresse, nb_places_assises, nb_places_debout) VALUES
-      ('Zénith de Nancy', 'Rue du Zénith, 54320 Maxéville', 18000, 7000),
-      ('L Autre Canal', '45 Bd d Austrasie, 54000 Nancy', 0, 13000),
-      (' Place Carnot', 'Pl. Carnot54000 Nancy', 0, 20000),
-      (' Parc de la Pépinière', 'Parc de la pepinière, 54000 Nancy', 0, 25000);
+                                                                              ('Zénith de Nancy', 'Rue du Zénith, 54320 Maxéville', 18000, 7000),
+                                                                              ('L Autre Canal', '45 Bd d Austrasie, 54000 Nancy', 0, 13000),
+                                                                              (' Place Carnot', 'Pl. Carnot54000 Nancy', 0, 20000),
+                                                                              (' Parc de la Pépinière', 'Parc de la pepinière, 54000 Nancy', 0, 25000);
 
 -- Insertion des spectacles
-INSERT INTO spectacle (titre, artiste, duree, style, video, description, id_img) VALUES
-     ('Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'Concert de rock classique', 1),
-     ('Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2);
+INSERT INTO spectacle (titre, artiste, duree, style, video, description, id_img, statut) VALUES
+                                                                                             ('Rock Night', 'ACDC', '02:00:00', 'Classic Rock', 'https://www.youtube.com/watch?v=gEPmA3USJdI', 'Concert de rock classique', 1, 'confirmé' ),
+                                                                                             ('Blues Vibes', 'Blues Brothers', '01:30:00', 'Blues Rock', 'https://www.youtube.com/watch?v=RrhThz_1Z2I', 'Spectacle de blues rock', 2, 'confirmé');
 
 -- Insertion des soirées
 INSERT INTO soiree (nom_soiree, date, tarif, thematique, id_lieu, id_img) VALUES
-  ('Soirée Rock', '2024-10-01', 25.00, 'Rock', 1, 3),
-  ('Soirée Blues', '2024-10-02', 30.00, 'Blues', 2, 3),
-  ('Soirée Metal', '2024-10-03', 20.00, 'Metal', 3, 3);
+                                                                              ('Soirée Rock', '2024-10-01', 25.00, 'Rock', 1, 3),
+                                                                              ('Soirée Blues', '2024-10-02', 30.00, 'Blues', 2, 3),
+                                                                              ('Soirée Metal', '2024-10-03', 20.00, 'Metal', 3, 3);
 
 -- Insertion des relations SoireeToSpectacle
 INSERT INTO soireetospectacle (id_soiree, id_spectacle) VALUES
-    (1, 1), -- Rock Night dans la première soirée
-    (1, 2), -- Blues Vibes dans la première soirée
-    (2, 1), -- Rock Night dans la deuxième soirée
-    (3, 2); -- Blues Vibes dans la troisième soirée
+                                                            (1, 1), -- Rock Night dans la première soirée
+                                                            (1, 2), -- Blues Vibes dans la première soirée
+                                                            (2, 1), -- Rock Night dans la deuxième soirée
+                                                            (3, 2); -- Blues Vibes dans la troisième soirée

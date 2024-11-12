@@ -6,12 +6,10 @@ namespace iutnc\nrv\evenement;
 class Spectacle
 {
     protected int $id, $duree, $id_img;
-<<<<<<< HEAD
+
     protected string $titre, $artiste, $style, $description, $video, $statut;
-=======
-    protected int|null $id_img_bg;
-    protected string $titre, $artiste, $style, $description, $video;
->>>>>>> b90bc89af80cda8348be0f4c8a2417157c9a9ecd
+    protected int $id_img_bg;
+
 
     public function __construct($id, $titre, $artiste, $duree, $style, $video, $description ,$id_img,$statut)
     {
