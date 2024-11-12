@@ -60,7 +60,8 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
+            $statut=$row['statut'];
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
             array_push($list, $spectacle);
         }
         return $list;
@@ -247,5 +248,15 @@ class Repository
         $query->bindParam(7, $image);
         $query->execute();
     }
+
+    public function annulerSpectacle(int $idSpectacle): void
+    {
+        $query = $this->pdo->prepare("UPDATE spectacle SET statut = 'annulé' WHERE id_spectacle = :id");
+        $query->bindParam(':id', $idSpectacle, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+
+
 
 }

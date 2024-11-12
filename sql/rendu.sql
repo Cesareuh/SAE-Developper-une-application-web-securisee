@@ -116,7 +116,7 @@ CREATE TABLE spectacle (
                            video VARCHAR(500),
                            description VARCHAR(10000),
                            id_img INT,
-                           etat ENUM('confirmé', 'annulé') DEFAULT 'confirmé'
+                           statut ENUM('confirmé', 'annulé') DEFAULT 'confirmé'
                            PRIMARY KEY (id_spectacle),
                            FOREIGN KEY (id_img) REFERENCES image(id_img) ON DELETE SET NULL
 );
