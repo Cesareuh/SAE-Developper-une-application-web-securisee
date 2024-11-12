@@ -42,7 +42,7 @@ class Dispatcher{
             case 'filtre':
                 $a = (new action\FiltrageAction())->execute();
                 break;
-            case 'inscription':
+            case 'inscription-action':
                 $a = (new action\InscriptionAction())->execute();
                 break;
             default:

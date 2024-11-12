@@ -60,7 +60,9 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
+
+            $statut=$row['statut'];
+            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
             array_push($list, $spectacle);
         }
         return $list;
@@ -155,7 +157,8 @@ class Repository
                 $row['style'],
                 $row['video'],
                 $row['description'],
-                $row['id_img']
+                $row['id_img'],
+                $row['statut']
             );
         }
 
@@ -188,11 +191,13 @@ class Repository
     }
 
     // Crée un nouvel utilisateur dans la base de données
-    public static function creerUtilisateur(string $email, string $hashedPassword, string $role): void
+    public static function creerUtilisateur(string $email, string $hashedPassword): void
     {
         $pdo = Database::getConnection();
-        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, ?)");
-        $stmt->execute([$email, $hashedPassword, $role]);
+
+        // On fixe le rôle à 'visiteur' par défaut
+        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
+        $stmt->execute([$email, $hashedPassword]);
     }
 
     public function ajouterImage(String $img, String $nom, String $type, int $taille, mixed $id_bg):int{
@@ -247,4 +252,54 @@ class Repository
         return $list;
     }
     
+    public function trouveTousLieux():array{
+        $query= $this->pdo->prepare("SELECT * FROM lieu");
+        $query->execute();
+        $list=[];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $id=$row['id_lieu'];
+            $nom=$row['nom_lieu'];
+            $adresse=$row['adresse'];
+            $nb_places_assises=$row['nb_places_assises'];
+            $nb_places_debout=$row['nb_places_debout'];
+            $s=new Soiree($id, $nom, $adresse, $nb_places_assises,$nb_places_debout, $nb_places_assises,$nb_places_debout);
+            array_push($list, $s);
+        }
+        return $list;
+    }
+
+    public function ajouterSoiree(Soiree $soiree){
+        $query=$this->pdo->prepare("insert into soiree values (?,?,?,?,?,?,?)");
+        $id=0;
+        $nom=$soiree->nom;
+        $date=$soiree->date;
+        $tarif=$soiree->tarif;
+        $thematique=$soiree->thematique;
+        $lieu=$soiree->lieu;
+        $image=$soiree->image;
+
+        $query->bindParam(1,$id);
+        $query->bindParam(2, $nom);
+        $query->bindParam(3, $date);
+        $query->bindParam(4, $tarif);
+        $query->bindParam(5, $thematique);
+        $query->bindParam(6, $lieu);
+        $query->bindParam(7, $image);
+        $query->execute();
+    }
+
+
+    public function annulerSpectacle(int $idSpectacle): void
+    {
+        $query = $this->pdo->prepare("UPDATE spectacle SET statut = 'annulé' WHERE id_spectacle = :id");
+        $query->bindParam(':id', $idSpectacle, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+	public function getImageBgId(int $id_img):mixed{
+		$query = $this->pdo->prepare("select id_img_bckgrnd from image where id_img = :id");
+		$query->bindParam(":id", $id_img);
+		$query->execute();
+		return $query->fetch(\PDO::FETCH_ASSOC)['id_img_bckgrnd'];
+	}
 }
