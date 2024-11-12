@@ -49,7 +49,7 @@ class CreerSpectacleAction extends Action
 				// Insérer photo de fond
                 $id_bg=$repo->ajouterImage($_FILES['background']['tmp_name'], $_FILES['background']['name'], $_FILES['background']['type'], $_FILES['background']['size'], null);
 				// Insérer photo de profil
-                $id_img=$repo->ajouterImage($_FILES['photo']['tmp_name'], $_FILES['photo']['name'], $_FILES['photo']['type'], $_FILES['photo']['size'], null);
+                $id_img=$repo->ajouterImage($_FILES['photo']['tmp_name'], $_FILES['photo']['name'], $_FILES['photo']['type'], $_FILES['photo']['size'], $id_bg);
 
 
                 $at = new Spectacle(0, $infos['titre'], $infos['artiste'], $d, $infos['style'], $infos['video'], $infos['description'], $id_img);
