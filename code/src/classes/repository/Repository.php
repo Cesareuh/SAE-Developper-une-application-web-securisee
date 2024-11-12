@@ -60,7 +60,7 @@ class Repository
             $video=$row['video'];
             $photo=$row['id_img'];
             $description=$row['description'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
+            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo);
             array_push($list, $spectacle);
         }
         return $list;
@@ -247,5 +247,12 @@ class Repository
         $query->bindParam(7, $image);
         $query->execute();
     }
+
+	public function getImageBgId(int $id_img):mixed{
+		$query = $this->pdo->prepare("select id_img_bckgrnd from image where id_img = :id");
+		$query->bindParam(":id", $id_img);
+		$query->execute();
+		return $query->fetch(\PDO::FETCH_ASSOC)['id_img_bckgrnd'];
+	}
 
 }
