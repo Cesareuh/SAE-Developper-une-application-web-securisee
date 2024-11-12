@@ -210,4 +210,40 @@ class Repository
         return $id;
     }
 
+    public function trouveTousLieux():array{
+        $query= $this->pdo->prepare("SELECT * FROM lieu");
+        $query->execute();
+        $list=[];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $id=$row['id_lieu'];
+            $nom=$row['nom_lieu'];
+            $adresse=$row['adresse'];
+            $nb_places_assises=$row['nb_places_assises'];
+            $nb_places_debout=$row['nb_places_debout'];
+            $s=new Soiree($id, $nom, $adresse, $nb_places_assises,$nb_places_debout, $nb_places_assises,$nb_places_debout);
+            array_push($list, $s);
+        }
+        return $list;
+    }
+
+    public function ajouterSoiree(Soiree $soiree){
+        $query=$this->pdo->prepare("insert into soiree values (?,?,?,?,?,?,?)");
+        $id=0;
+        $nom=$soiree->nom;
+        $date=$soiree->date;
+        $tarif=$soiree->tarif;
+        $thematique=$soiree->thematique;
+        $lieu=$soiree->lieu;
+        $image=$soiree->image;
+
+        $query->bindParam(1,$id);
+        $query->bindParam(2, $nom);
+        $query->bindParam(3, $date);
+        $query->bindParam(4, $tarif);
+        $query->bindParam(5, $thematique);
+        $query->bindParam(6, $lieu);
+        $query->bindParam(7, $image);
+        $query->execute();
+    }
+
 }
