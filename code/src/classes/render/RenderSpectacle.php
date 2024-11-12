@@ -23,6 +23,8 @@ class RenderSpectacle extends Renderer
 				<div class=haut >";
 			if($this->spec->id_img_bg !== null){
 				$res .= "<img src='data:image/png;base64,".base64_encode($repo->getImageById($this->spec->id_img_bg))."' class=bg alt='Photo de l'artiste' />";
+			}else{
+				$res .= "<img src='../../../images_de_base/fond.jpg' class=bg alt='Photo de l'artiste' />";
 			}
 				$res.= "
 					<h1 class=artiste>".$this->spec->artiste."</h1>
@@ -40,10 +42,16 @@ class RenderSpectacle extends Renderer
             $res = $res ."<div class=complexe><div class=haut>";
 			if($this->spec->id_img_bg !== null){
 				$res .= "<img src='data:image/png;base64,".base64_encode($repo->getImageById($this->spec->id_img_bg))."' class=bg alt='Photo de l'artiste' />";
+			}else{
+				$res .= "<img src='../../../images_de_base/fond.jpg' class=bg alt='Photo de l'artiste' class=bg />";
 			}
-                $res .= "
-                    <img src='data:image/png;base64,".base64_encode($repo->getImageById($this->spec->id_img))."' class=photo_profil alt='Photo de l'artiste' />
-                    <h1 class=artiste>".$this->spec->artiste."</h1>
+
+			if($repo->getImageById($this->spec->id_img) !== null){
+                $res .= "<img src='data:image/png;base64,".base64_encode($repo->getImageById($this->spec->id_img))."' class=photo_profil alt='Photo de l'artiste' />";
+			}else{
+				$res .= "<img src='../../../images_de_base/pp.jpg' class=photo_profil alt='Photo de l'artiste' />";
+			}
+                $res .= "<h1 class=artiste>".$this->spec->artiste."</h1>
                 </div>
                 <div class=bas>
                     <h2 class=titre>".$this->spec->titre."</h2>
