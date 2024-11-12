@@ -61,6 +61,7 @@ class RenderSpectacle extends Renderer
                     $res .= "<img src='data:image/png;base64," . base64_encode($repo->getImageById($this->spec->id_img_bg)) . "' class='bg' alt='Photo de l'artiste' />";
                 }
 
+                // Afficher l'image du spectacle
                 $res .= "<img src='data:image/png;base64," . base64_encode($repo->getImageById($this->spec->id_img)) . "' class='photo_profil' alt='Photo de l'artiste' />
                          <h1 class='artiste'>" . $this->spec->artiste . "</h1>
                          </div>

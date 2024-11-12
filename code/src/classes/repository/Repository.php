@@ -61,7 +61,7 @@ class Repository
             $photo=$row['id_img'];
             $description=$row['description'];
             $statut=$row['statut'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
+            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo, $statut);
             array_push($list, $spectacle);
         }
         return $list;
@@ -156,7 +156,8 @@ class Repository
                 $row['style'],
                 $row['video'],
                 $row['description'],
-                $row['id_img']
+                $row['id_img'],
+                $row['statut']
             );
         }
 
@@ -170,7 +171,7 @@ class Repository
         return $query->fetchObject();
     }
 
-	public function getImageById(int $id_img){
+	public function getImageById(int $id_img):mixed{
 		$query = $this->pdo->prepare("select * from image where id_img like :id");
 		$query->bindParam(":id", $id_img);
 		$query->execute();
@@ -269,6 +270,5 @@ class Repository
         $stmt->execute([$email]);
         return $stmt->rowCount() > 0;
     }
-
 
 }
