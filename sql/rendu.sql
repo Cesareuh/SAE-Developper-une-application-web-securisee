@@ -90,7 +90,7 @@ CREATE TABLE image (
                        nom_img VARCHAR(50) NOT NULL,
                        taille_img VARCHAR(25) NOT NULL,
                        type_img VARCHAR(25) NOT NULL,
-                       blob_img BLOB,
+                       blob_img LONGBLOB,
                        id_img_bckgrnd INT,
                        PRIMARY KEY (id_img),
                        FOREIGN KEY (id_img_bckgrnd) REFERENCES image(id_img) ON DELETE SET NULL
@@ -114,7 +114,7 @@ CREATE TABLE spectacle (
                            duree TIME,
                            style VARCHAR(50),
                            video VARCHAR(500),
-                           description VARCHAR(2000),
+                           description VARCHAR(10000),
                            id_img INT,
                            PRIMARY KEY (id_spectacle),
                            FOREIGN KEY (id_img) REFERENCES image(id_img) ON DELETE SET NULL

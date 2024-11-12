@@ -178,15 +178,16 @@ class Repository
 
 	}
 
-    public function ajouterImage(String $img, String $nom, String $type, int $taille):int{
+    public function ajouterImage(String $img, String $nom, String $type, int $taille, mixed $id_bg):int{
         $img_blob=file_get_contents($img);
         $id=0;
-        $stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?)');
+        $stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?,?)');
         $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $nom);
         $stmt->bindParam(3, $taille);
         $stmt->bindParam(4, $type);
         $stmt->bindParam(5, $img_blob);
+        $stmt->bindParam(6, $id_bg);
         $stmt->execute();
         $id=$this->pdo->lastInsertId();
         return $id;
