@@ -157,7 +157,8 @@ class Repository
                 $row['style'],
                 $row['video'],
                 $row['description'],
-                $row['id_img']
+                $row['id_img'],
+                $row['statut']
             );
         }
 

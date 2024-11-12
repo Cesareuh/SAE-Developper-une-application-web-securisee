@@ -6,7 +6,6 @@ namespace iutnc\nrv\evenement;
 class Spectacle
 {
     protected int $id, $duree, $id_img;
-
     protected string $titre, $artiste, $style, $description, $video, $statut;
     protected int $id_img_bg;
 
