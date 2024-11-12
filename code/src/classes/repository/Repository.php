@@ -240,7 +240,7 @@ class Repository {
             $photo = $row['id_img'];
             $description = $row['description'];
             $statut=$row['statut'];
-            $spectacle=new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video,$statut);
+            $spectacle=new Spectacle($id, $titre, $artiste, $duree, $style, $video, $description, $photo, $statut);
             array_push($list, $spectacle);
         }
 
