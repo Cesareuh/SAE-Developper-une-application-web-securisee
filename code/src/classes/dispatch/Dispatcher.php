@@ -44,7 +44,7 @@ class Dispatcher{
             case 'filtre':
                 $a = (new action\FiltrageAction())->execute();
                 break;
-            case 'inscription-action':
+            case 'inscription':
                 $a = (new action\InscriptionAction())->execute();
                 break;
             default:
@@ -74,7 +74,7 @@ class Dispatcher{
         }
         echo <<<END
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
-                    <a href="index.php?action=inscriptionaction"><button type="button">S'inscrire</button></a>
+                    <a href="index.php?action=inscription"><button type="button">S'inscrire</button></a>
                     <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
                 </div>
                 $html

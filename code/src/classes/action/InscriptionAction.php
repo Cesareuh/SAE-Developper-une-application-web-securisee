@@ -9,6 +9,7 @@ class InscriptionAction extends Action
 {
     public function execute(): string
     {
+        $repo=Repository::getInstance();
         // Vérifier si la méthode HTTP est POST pour traiter l'inscription
         if ($this->http_method === 'POST') {
             // Récupérer les informations du formulaire
@@ -28,7 +29,7 @@ class InscriptionAction extends Action
 
             try {
                 // Vérifier si l'utilisateur existe déjà
-                $userExists = Repository::trouverUtilisateurParMail($mail);
+                $userExists = $repo->trouverUtilisateurParMail($mail);
                 if ($userExists) {
                     return "<p style='color: red;'>Cet email est déjà utilisé.</p>";
                 }
@@ -37,14 +38,14 @@ class InscriptionAction extends Action
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                 // Enregistrer l'utilisateur dans la base de données
-                Repository::creerUtilisateur($mail, $hashedPassword, $role);
+                $repo->creerUtilisateur($mail, $hashedPassword, $role);
 
                 // Démarrer une session et connecter l'utilisateur automatiquement après l'inscription
                 session_start();
                 $_SESSION['utilisateur'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil
-                header('Location: /accueil');
+                header('Location: http://localhost/sae/SAE-Developper-une-application-web-securisee/code/src/classes/index.php');
                 exit;
             } catch (\Exception $e) {
                 // Gérer les erreurs
@@ -55,11 +56,13 @@ class InscriptionAction extends Action
         // Si la méthode HTTP n'est pas POST, afficher le formulaire d'inscription
         $html = "
             <h1>Inscription</h1>
-            <form method='POST' action='?action=inscription-action '>
+            <form method='POST' action='?action=inscription'>
                 <label for='mail'>Email :</label>
                 <input type='email' name='mail' required><br>
                 <label for='password'>Mot de passe :</label>
                 <input type='password' name='password' required><br>
+                <label for='virif_password'>Vérification mot de passe</label>
+                <input type='password' name='virif_password' required><br>
                 <button type='submit'>S'inscrire</button>
             </form>
         ";
