@@ -2,6 +2,8 @@
 
 namespace iutnc\nrv\dispatch;
 use iutnc\nrv\action;
+use iutnc\nrv\auth\AuthnProvider;
+use iutnc\nrv\auth\Authz;
 
 class Dispatcher{
     private string $action;
@@ -62,9 +64,15 @@ class Dispatcher{
             <link rel="stylesheet" type="text/css" href="style.css?v=1">
             <body>
                 <div id="index">
+        END;
+        if(true) {
+            echo <<<END
                     <a href="index.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soirée</button></a>
                     <a href="index.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
                     <a href="index.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
+        END;
+        }
+        echo <<<END
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
                     <a href="index.php?action=inscriptionaction"><button type="button">S'inscrire</button></a>
                     <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>

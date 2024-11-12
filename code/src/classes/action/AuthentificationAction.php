@@ -24,19 +24,19 @@ class AuthentificationAction extends Action
                 $_SESSION['user'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil ou une page protégée
-                header('Location: /accueil');
-                exit;
+                return "<p style='color: green;'>Vous êtes connecté.</p>";
             } catch (\Exception $e) {
                 // Si l'auth echoue: erreur
                 $html = "<p style='color: red;'>Identifiants incorrects. Veuillez réessayer.</p>";
                 return $html;
             }
-        }
+        }else if($this->http_method === 'GET') {
 
-        // Si la méthode HTTP n'est pas POST, hop connexion
-        $html = "
+
+            // Si la méthode HTTP n'est pas POST, hop connexion
+            $html = "
             <h1>Connexion</h1>
-            <form method='POST' action='/authentification'>
+            <form method='POST' action='?action=authentification'>
                 <label for='mail'>Email :</label>
                 <input type='email' name='mail' required><br>
                 <label for='password'>Mot de passe :</label>
@@ -45,6 +45,7 @@ class AuthentificationAction extends Action
             </form>
         ";
 
-        return $html;
+            return $html;
+        }else return "Mauvais ype requête";
     }
 }

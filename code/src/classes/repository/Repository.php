@@ -180,21 +180,18 @@ class Repository {
     }
 
     // Vérifie si un utilisateur existe déjà par son email
-    public static function trouverUtilisateurParMail(string $email): ?array
+    public function trouverUtilisateurParMail(string $email): ?array
     {
-        $pdo = Database::getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM Utilisateur WHERE mail = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE mail = ?");
         $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
     // Crée un nouvel utilisateur dans la base de données
-    public static function creerUtilisateur(string $email, string $hashedPassword): void
+    public function creerUtilisateur(string $email, string $hashedPassword): void
     {
-        $pdo = Database::getConnection();
-
         // On fixe le rôle à 'visiteur' par défaut
-        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
+        $stmt = $this->pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
         $stmt->execute([$email, $hashedPassword]);
     }
 
@@ -299,7 +296,18 @@ class Repository {
         $query->bindParam(":id", $id_img);
         $query->execute();
 
+
         $result = $query->fetch(\PDO::FETCH_ASSOC);
         return $result ? $result['id_img_bckgrnd'] : null;
     }
+
+    public function getPassword(string $email): ?string{
+        $query = $this->pdo->prepare("select motdepasse from utilisateur where mail = ?");
+        $query->bindParam(1, $email);
+        $query->execute();
+        return $query->fetch(\PDO::FETCH_ASSOC)["motdepasse"] ?: null;
+    }
+
+
+
 }
