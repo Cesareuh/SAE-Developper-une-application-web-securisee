@@ -42,6 +42,9 @@ class Dispatcher{
             case 'filtre':
                 $a = (new action\FiltrageAction())->execute();
                 break;
+            case 'inscription':
+                $a = (new action\InscriptionAction())->execute();
+                break;
             default:
                 $a = 'Index';
                 break;
@@ -63,6 +66,8 @@ class Dispatcher{
                     <a href="index.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
                     <a href="index.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
+                    <a href="index.php?action=inscriptionaction"><button type="button">S'inscrire</button></a>
+                    <a href="index.php?action=afficherlistespectacleaction"><button type="button">afficher liste spectacle</button></a>
                     <a href="index.php?action=filtre"><button type="button">Filtrer</button></a>
                 </div>
                 $html

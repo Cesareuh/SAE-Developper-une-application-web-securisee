@@ -176,4 +176,21 @@ class Repository
 
 	}
 
+    // Vérifie si un utilisateur existe déjà par son email
+    public static function trouverUtilisateurParMail(string $email): ?array
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM Utilisateur WHERE mail = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    // Crée un nouvel utilisateur dans la base de données
+    public static function creerUtilisateur(string $email, string $hashedPassword, string $role): void
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, ?)");
+        $stmt->execute([$email, $hashedPassword, $role]);
+    }
+
 }

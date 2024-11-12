@@ -144,13 +144,13 @@ CREATE TABLE soireetospectacle (
 );
 
 -- Table Utilisateur
-CREATE TABLE utilisateur (
-                             id_utilisateur INT NOT NULL AUTO_INCREMENT,
-                             mail VARCHAR(100) NOT NULL UNIQUE,
-                             motdepasse VARCHAR(255) NOT NULL,
-                             role ENUM('visiteur', 'staff', 'admin', 'organisateur') NOT NULL,
-                             PRIMARY KEY (id_utilisateur)
+CREATE TABLE Utilisateur (
+                             ID_Utilisateur INT AUTO_INCREMENT PRIMARY KEY,
+                             mail VARCHAR(100) UNIQUE NOT NULL,
+                             MotDePasse VARCHAR(255) NOT NULL,
+                             Role ENUM('visiteur', 'staff', 'admin', 'organisateur') DEFAULT 'visiteur'
 );
+
 
 -- Insertion des utilisateurs
 INSERT INTO utilisateur (mail, motdepasse, role) VALUES
