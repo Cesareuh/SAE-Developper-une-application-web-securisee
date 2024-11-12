@@ -210,4 +210,41 @@ class Repository
         return $id;
     }
 
+    public function trouveOptionsPourFiltre(string $filtre): array {
+        $query = "SELECT DISTINCT $filtre FROM spectacle";
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+    public function trouveSpectaclesFiltres(string $filtre, string $valeur): array {
+        // Construire la requête dynamique pour le filtre
+        $query = "SELECT * FROM spectacle WHERE $filtre = :valeur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['valeur' => $valeur]);
+        
+        // Récupérer tous les spectacles
+        $spectacles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Créer une liste vide de spectacles
+        $list = [];
+        
+        // Parcours des résultats de la requête et création des objets Spectacle
+        foreach ($spectacles as $row) {
+            $id = $row['id_spectacle'];
+            $titre = $row['titre'];
+            $artiste = $row['artiste'];
+            $duree = (int) $row['duree'];
+            $style = $row['style'];
+            $video = $row['video'];
+            $photo = $row['id_img'];
+            $description = $row['description'];
+            
+            $spectacle = new Spectacle($id, $titre, $artiste, $photo, $duree, $style, $description, $video);
+            array_push($list, $spectacle);
+        }
+        
+        return $list;
+    }
+    
 }
