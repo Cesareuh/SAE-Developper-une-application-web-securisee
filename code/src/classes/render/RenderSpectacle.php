@@ -17,7 +17,7 @@ class RenderSpectacle extends Renderer
         $repo = Repository::getInstance();
         $res = "";
 
-        $statut = $this->spec->getStatut();
+        $statut = $this->spec->statut;
         $isCancelled = ($statut === 'annulé');
 
 
