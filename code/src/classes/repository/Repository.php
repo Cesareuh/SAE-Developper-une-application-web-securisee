@@ -170,6 +170,25 @@ class Repository {
         return $query->fetchObject();
     }
 
+	public function getSoireeBySpectacleId(int $idSpectacle){
+		$stmt = $this->pdo->prepare("select * from soireetospectacle where id_spectacle = :id");
+		$stmt->bindParam(":id", $idSpectacle);
+		$stmt->execute();
+
+		$listeSoiree = array();
+		while($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
+			$id = $row['id_soiree'];
+			$nom = $row['nom_soiree'];
+			$date = $row['date'];
+			$tarif = $row['tarif'];
+			$thematique = $row['thematique'];
+			$lieu = $row['id_lieu'];
+			$image = $row['id_img'];
+
+			array_push($listeSoiree, new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image));
+		}
+	}
+
     public function getImageById(int $id_img):mixed{
         $query = $this->pdo->prepare("select * from image where id_img like :id");
         $query->bindParam(":id", $id_img);
