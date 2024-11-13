@@ -47,6 +47,9 @@ class Dispatcher{
             case 'inscription':
                 $a = (new action\InscriptionAction())->execute();
                 break;
+            case 'deconnexion' :
+                $a = (new action\DeconnexionAction())->execute();
+                break;
             default:
                 $a = 'Index';
                 break;
@@ -64,8 +67,14 @@ class Dispatcher{
             <link rel="stylesheet" type="text/css" href="style.css?v=1">
             <body>
                 <div id="index">
+                    <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
         END;
-        if(true) {
+        try {
+            $role = AuthnProvider::getSignedInUser()['role'];
+        } catch (\Exception $e) {
+            $role="visiteur";
+        }
+        if($role!="visiteur") {
             echo <<<END
                     <a href="index.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soirée</button></a>
                     <a href="index.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
@@ -75,7 +84,9 @@ class Dispatcher{
         echo <<<END
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
                     <a href="index.php?action=inscription"><button type="button">S'inscrire</button></a>
-                    <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
+        END;
+        echo <<<END
+                    <a href="index.php?action=deconnexion"><button type="button">Deconnexion</button></a>
                 </div>
                 $html
             </body>

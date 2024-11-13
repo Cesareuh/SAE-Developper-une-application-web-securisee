@@ -43,9 +43,9 @@ class AuthnProvider{
     }
 
 	static function getSignedInUser(): ?array{
-		if(isset($_SESSION["user"])){
+		if(isset($_SESSION["utilisateur"])){
 			$repo = Repository::getInstance();
-            return $repo->trouverUtilisateurParMail($_SESSION["user"]);
+            return $repo->trouverUtilisateurParMail($_SESSION["utilisateur"]);
 		}else{
 			throw new \Exception("Aucun utilisateur connecté");
 		}

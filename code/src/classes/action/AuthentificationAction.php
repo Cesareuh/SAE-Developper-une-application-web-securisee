@@ -20,7 +20,7 @@ class AuthentificationAction extends Action
                 AuthnProvider::signin($mail, $password);
 
                 //  démarre une session si l'auth marche
-                $_SESSION['user'] = $mail;
+                $_SESSION['utilisateur'] = $mail;
 
                 // Rediriger l'utilisateur vers la page d'accueil ou une page protégée
                 return "<p style='color: green;'>Vous êtes connecté.</p>";
@@ -45,6 +45,6 @@ class AuthentificationAction extends Action
         ";
 
             return $html;
-        }else return "Mauvais ype requête";
+        }else return "Mauvais type requête";
     }
 }
