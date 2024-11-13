@@ -2,6 +2,7 @@
 
 namespace iutnc\nrv\repository;
 
+use Couchbase\User;
 use iutnc\nrv\evenement\Soiree;
 use iutnc\nrv\evenement\Spectacle;
 use PDO;
@@ -333,6 +334,28 @@ class Repository {
         $query->bindParam(1, $email);
         $query->execute();
         return $query->fetch(\PDO::FETCH_ASSOC)["motdepasse"] ?: null;
+    }
+
+    public function afficherTousUtilisateurs():?array{
+        $query = $this->pdo->prepare("SELECT * FROM utilisateur");
+        $query->execute();
+        $list=[];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $mail=$row['mail'];
+            $role=$row['role'];
+            $user['mail']=$mail;
+            $user['role']=$role;
+            array_push($list, $user);
+        }
+        return $list;
+    }
+
+    public function setRole(string $mail, string $role): void
+    {
+        $query = $this->pdo->prepare("UPDATE utilisateur SET role = ? WHERE mail = ?");
+        $query->bindParam(1, $role, PDO::PARAM_STR);
+        $query->bindParam(2, $mail, PDO::PARAM_STR);
+        $query->execute();
     }
 
 

@@ -50,6 +50,9 @@ class Dispatcher{
             case 'deconnexion' :
                 $a = (new action\DeconnexionAction())->execute();
                 break;
+            case 'gestion-role' :
+                $a = (new action\GestionRoleAction())->execute();
+                break;
             default:
                 $a = 'Index';
                 break;
@@ -79,14 +82,24 @@ class Dispatcher{
                     <a href="index.php?action=ajouter-spectacle"><button type="button">Ajouter Spectacle à Soirée</button></a>
                     <a href="index.php?action=creer-soiree"><button type="button">Créer une Soirée</button></a>
                     <a href="index.php?action=creer-spectacle"><button type="button">Créer un Spectacle</button></a>
-        END;
+            END;
         }
-        echo <<<END
+        if($role=='admin') {
+            echo <<<END
+                    <a href="index.php?action=gestion-role"><button type="button">Gerer Utilisateurs</button></a>
+            END;
+        }
+        if(isset($_SESSION['utilisateur'])){
+            echo <<<END
+                    <a href="index.php?action=deconnexion"><button type="button">Deconnexion</button></a>
+            END;
+        }else{
+            echo <<<END
                     <a href="index.php?action=authentification"><button type="button">Authentification</button></a>
                     <a href="index.php?action=inscription"><button type="button">S'inscrire</button></a>
         END;
+        }
         echo <<<END
-                    <a href="index.php?action=deconnexion"><button type="button">Deconnexion</button></a>
                 </div>
                 $html
             </body>
