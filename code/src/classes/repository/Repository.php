@@ -230,7 +230,10 @@ class Repository {
     }
 
     public function trouveOptionsPourFiltre(string $filtre): array {
-        $query = "SELECT DISTINCT $filtre FROM spectacle";
+        $query = "SELECT DISTINCT $filtre FROM spectacle 
+            JOIN soireetospectacle ON spectacle.id_spectacle = soireetospectacle.id_spectacle
+            JOIN soiree ON soireetospectacle.id_soiree = soiree.id_soiree
+            JOIN lieu ON soiree.id_lieu = lieu.id_lieu";
         $stmt = $this->pdo->query($query);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -238,7 +241,12 @@ class Repository {
 
     public function trouveSpectaclesFiltres(string $filtre, string $valeur): array {
         // Construire la requête dynamique pour le filtre
-        $query = "SELECT * FROM spectacle WHERE $filtre = :valeur";
+        $query = "SELECT *
+            FROM spectacle 
+            JOIN soireetospectacle ON spectacle.id_spectacle = soireetospectacle.id_spectacle
+            JOIN soiree ON soireetospectacle.id_soiree = soiree.id_soiree
+            JOIN lieu ON soiree.id_lieu = lieu.id_lieu
+            WHERE $filtre = :valeur";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['valeur' => $valeur]);
 
