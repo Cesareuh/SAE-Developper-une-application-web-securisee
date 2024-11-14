@@ -70,6 +70,10 @@ class Dispatcher{
             <link rel="stylesheet" type="text/css" href="style.css?v=1">
             <body>
                 <div id="index">
+                <a href="index.php">
+                <img src="../../../images_de_base/logo.png" alt="logo" id="logo">
+                </a>
+                <div id="index_droite">
                     <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
         END;
         try {
@@ -100,6 +104,7 @@ class Dispatcher{
         END;
         }
         echo <<<END
+                </div>
                 </div>
                 $html
             </body>

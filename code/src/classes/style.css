@@ -49,6 +49,12 @@ body, .bas, select, input, textarea, #index{
 #index {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+#index_droite {
+	display: flex;
+	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
 }
@@ -252,6 +258,10 @@ li:hover{
 	z-index: 2;
 }
 
+#logo{
+	height: 100px;
+}
+
 
 @media (max-width: 800px) {
   .presentation {
@@ -260,7 +270,7 @@ li:hover{
 }
 
 @media (max-width: 650px) {
-  #index, form{
+  #index_droite, form, #index{
     flex-direction: column;
   }
 }
