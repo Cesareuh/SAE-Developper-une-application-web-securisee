@@ -16,6 +16,8 @@ class Dispatcher{
     }
 
     public function run(){
+        $a = '';  // Define $a with a default value
+    
         switch ($this->action){
             case 'afficher-soiree':
                 $a = (new action\AffichageSoireeAction())->execute();
@@ -53,10 +55,25 @@ class Dispatcher{
             case 'gestion-role' :
                 $a = (new action\GestionRoleAction())->execute();
                 break;
+            case 'afficher-preferences':
+                $a = (new action\AfficherPreferencesCookieAction())->execute();
+                break;
+            case 'ajouter-preference':
+                // Créer et exécuter l'action pour ajouter une préférence
+                $actionObj = new \iutnc\nrv\action\AjouterPreferenceCookieAction();
+                $actionObj->execute();
+                break;
+            case 'supprimer-preference':
+                // Créer et exécuter l'action pour supprimer une préférence
+                $actionObj = new \iutnc\nrv\action\SupprimerPreferenceCookieAction();
+                $actionObj->execute();
+                break;
             default:
-                $a = 'Index';
+                $a = 'Index'; // Ensure $a is always set
                 break;
         }
+    
+        // Now $a will always be set, avoiding the warning
         $this->renderPage($a);
     }
 
@@ -71,6 +88,7 @@ class Dispatcher{
             <body>
                 <div id="index">
                     <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
+                    <a href="index.php?action=afficher-preferences"><button type="button">Mes Préférences</button></a>
         END;
         try {
             $role = AuthnProvider::getSignedInUser()['role'];
