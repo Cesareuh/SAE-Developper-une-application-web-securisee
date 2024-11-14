@@ -244,6 +244,14 @@ li:hover{
 	flex: 0 1 350px;
 }
 
+.annule{
+	font-size: 2em;
+	margin: 10px 0 -10px 0;
+	font-weight: bold;
+	background-color: #ff0000;
+	z-index: 2;
+}
+
 
 @media (max-width: 800px) {
   .presentation {

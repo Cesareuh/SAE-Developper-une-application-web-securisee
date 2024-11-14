@@ -34,8 +34,11 @@ class RenderSpectacle extends Renderer
 				}
                 $res.= "
 				</div>
-				<div class=bas >
-					<h2 class=titre>".$this->spec->titre."</h2>
+				<div class=bas >";
+                if ($isCancelled) {
+                    $res .= "<p class='annule' >Spectacle Annulé</p>";
+                }
+					$res .= "<h2 class=titre>".$this->spec->titre."</h2>
 					<div class=infos >
 						<h3 class=style>".$this->spec->style."</h3>
 						<h3 class=duree>".$this->spec->duree." min</h3>
@@ -56,6 +59,9 @@ class RenderSpectacle extends Renderer
 				}else{
                     $res .= "<img src='../../../images_de_base/pp.jpg' class=photo_profil alt='Photo de l'artiste' />";
 				}
+                if ($isCancelled) {
+                    $res .= "<p class='annule' >Spectacle Annulé</p>";
+                }
 				$res .= "<h1 class=artiste>".$this->spec->artiste."</h1>
                 </div>
                 <div class=bas>
@@ -67,9 +73,6 @@ class RenderSpectacle extends Renderer
                     <div class=presentation>
                         <p class=desc>".$this->spec->description."</p>
                         <hr>";
-                if ($isCancelled) {
-                    $res .= "<p class='annule' style='color:red;'>Spectacle Annulé</p>";
-                }
                 if (!empty($this->spec->video)) {
                     $res .= "<iframe width='560' height='315' src='" . $this->spec->video . "' 
                                 title='YouTube video player' frameborder='0' 
