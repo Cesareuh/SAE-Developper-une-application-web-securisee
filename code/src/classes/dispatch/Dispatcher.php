@@ -12,7 +12,9 @@ class Dispatcher{
         $this->action = '';
         if (isset($_GET['action'])) {
             $this->action = $_GET['action'];
-        }
+        }else{
+			$this->action = 'afficher-liste-spectacle';
+		}
     }
 
     public function run(){
