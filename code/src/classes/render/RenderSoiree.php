@@ -12,16 +12,30 @@ class RenderSoiree extends Renderer{
 	}
 
 	public function render(int $selector):string{
+		$repo = \iutnc\nrv\repository\Repository::getInstance();
 		$res = "";
 		switch($selector){
 		case 1:
-			$res = $res ."<div class=simple>
-				<img class=photo_soiree src=\"".$this->soiree->photo."\" alt=\"Photo de la soirée\"/>
-				<h1 class=nom_soiree>".$this->soiree->nom."</h1>
-				<h2 class=theme_soiree>".$this->soiree->thematique."</h2>
-				<p class=date>&#128197".$this->soiree->date."</p>
-				<p class=lieu>&#128205".$this->soiree->lieu."</p>
-				</div>";
+                $res .= "<div class=simple>
+				<a href='index.php?action=afficher-spectacle&id_spectacle=".$this->soiree->id."' >
+				<div class=haut >
+					<h1 class=artiste>".$this->soiree->nom."</h1>";
+    //             if($this->soiree->id_img !== null){
+    //                 $res .= "<img src='data:image/png;base64,".base64_encode($repo->getImageById($this->soiree->id_img))."' class=bg alt='Photo de la soirée' />";
+				// }else{
+                    $res .= "<img src='../../../images_de_base/fond.jpg' class=bg alt='Photo de la soirée' />";
+				// }
+                $res.= "
+				</div>
+				<div class=bas >
+					<div class=infos_soiree >
+						<h3 class=date>Date : ".$this->soiree->date."</h3>
+						<h3 class=lieu>Lieu : ".$repo->trouveLieuParId($this->soiree->id_lieu)->nom_lieu."</h3>
+						<h3 class=thematique>Thème : ".$this->soiree->thematique."</h3>
+						<h3 class=tarif>Tarif : ".$this->soiree->tarif."€</h3>
+					</div>
+				</div>
+				</div></a>";
 			break;
 		case 2:
 

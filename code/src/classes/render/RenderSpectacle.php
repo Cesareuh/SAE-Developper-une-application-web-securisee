@@ -25,14 +25,14 @@ class RenderSpectacle extends Renderer
             case 1:
                 $res .= "<div class=simple>
 				<a href='index.php?action=afficher-spectacle&id_spectacle=".$this->spec->id."' >
-				<div class=haut >";
+				<div class=haut >
+					<h1 class=artiste>".$this->spec->artiste."</h1>";
                 if($this->spec->id_img_bg !== null){
                     $res .= "<img src='data:image/png;base64,".base64_encode($repo->getImageById($this->spec->id_img_bg))."' class=bg alt='Photo de l'artiste' />";
 				}else{
                     $res .= "<img src='../../../images_de_base/fond.jpg' class=bg alt='Photo de l'artiste' />";
 				}
                 $res.= "
-					<h1 class=artiste>".$this->spec->artiste."</h1>
 				</div>
 				<div class=bas >
 					<h2 class=titre>".$this->spec->titre."</h2>
@@ -40,8 +40,8 @@ class RenderSpectacle extends Renderer
 						<h3 class=style>".$this->spec->style."</h3>
 						<h3 class=duree>".$this->spec->duree." min</h3>
 					</div>
-				</div>
-				</div></a>";
+				</div></a>
+				</div>";
                 break;
             case 2:
                 $res = $res ."<div class=complexe><div class=haut>";
@@ -76,7 +76,13 @@ class RenderSpectacle extends Renderer
                                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' 
                                 referrerpolicy='strict-origin-when-cross-origin' allowfullscreen></iframe>";
                 }
-                $res .= "</div></div></div>";
+				$res .= "</div>
+					<h1>Soirées incluant ce spectacle</h1>
+					<ul>";
+				foreach($repo->getSoireeBySpectacleId($this->spec->id) as $soiree){
+					$res .= "<li>" . (new RenderSoiree($soiree))->render(1) . "</li>";
+				}
+				$res .=	"</ul></div></div>";
                 break;
         }
 

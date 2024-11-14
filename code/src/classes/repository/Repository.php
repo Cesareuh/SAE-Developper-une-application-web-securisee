@@ -2,7 +2,8 @@
 
 namespace iutnc\nrv\repository;
 
-use Couchbase\User;
+// use Couchbase\User;
+use iutnc\nrv\evenement\Lieu;
 use iutnc\nrv\evenement\Soiree;
 use iutnc\nrv\evenement\Spectacle;
 use PDO;
@@ -171,8 +172,10 @@ class Repository {
         return $query->fetchObject();
     }
 
-	public function getSoireeBySpectacleId(int $idSpectacle){
-		$stmt = $this->pdo->prepare("select * from soireetospectacle where id_spectacle = :id");
+	public function getSoireeBySpectacleId(int $idSpectacle):array{
+		$stmt = $this->pdo->prepare("select * from soireetospectacle
+			inner join soiree on soiree.id_soiree = soireetospectacle.id_soiree
+			where id_spectacle = :id");
 		$stmt->bindParam(":id", $idSpectacle);
 		$stmt->execute();
 
@@ -186,8 +189,9 @@ class Repository {
 			$lieu = $row['id_lieu'];
 			$image = $row['id_img'];
 
-			array_push($listeSoiree, new Soiree($id, $nom, $date, $lieu, $thematique, $tarif, $image));
+			array_push($listeSoiree, new Soiree($id, $nom, $date, $tarif, $thematique, $lieu, $image));
 		}
+		return $listeSoiree;
 	}
 
     public function getImageById(int $id_img):mixed{
@@ -291,6 +295,24 @@ class Repository {
         return $list;
     }
 
+	public function trouveLieuParId(int $id_lieu): Lieu {
+		$query = $this->pdo->prepare("SELECT * FROM lieu WHERE id_lieu = :id");
+		$query->bindParam(':id', $id_lieu);
+		$query->execute();
+
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+
+		$id = $row['id_lieu'];
+		$nom = $row['nom_lieu'];
+		$adresse = $row['adresse'];
+		$nb_places_assises = $row['nb_places_assises'];
+		$nb_places_debout = $row['nb_places_debout'];
+
+		$lieu = new Lieu($id, $nom, $adresse, $nb_places_assises, $nb_places_debout);
+
+		return $lieu;
+	}
+
     public function ajouterSoiree(Soiree $soiree){
         $query=$this->pdo->prepare("insert into soiree values (?,?,?,?,?,?,?)");
         $id=0;
@@ -298,8 +320,8 @@ class Repository {
         $date=$soiree->date;
         $tarif=$soiree->tarif;
         $thematique=$soiree->thematique;
-        $lieu=$soiree->lieu;
-        $image=$soiree->image;
+        $lieu=$soiree->id_lieu;
+        $image=$soiree->id_img;
 
         $query->bindParam(1,$id);
         $query->bindParam(2, $nom);
