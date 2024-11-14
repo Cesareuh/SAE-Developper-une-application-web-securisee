@@ -6,22 +6,27 @@ class AjouterPreferenceCookieAction extends Action
 {
     public function execute(): string
     {
-        $idSpectacle = $_POST['id_spectacle'] ?? null;
-        if (!$idSpectacle) {
-            return "<p>Aucun spectacle sélectionné.</p>";
+        $id_spectacle = $_GET['id_spectacle'] ?? null;
+        $status = '';
+
+        if ($id_spectacle) {
+            // Récupérer les préférences existantes
+            $preferences = json_decode($_COOKIE['preferences'] ?? '[]', true);
+
+            // Si l'ID du spectacle n'est pas déjà dans les préférences, l'ajouter
+            if (!in_array($id_spectacle, $preferences)) {
+                $preferences[] = $id_spectacle; // Ajoute l'ID du spectacle aux préférences
+                setcookie('preferences', json_encode($preferences), time() + 3600 * 24 * 30, "/"); // Sauvegarde les préférences dans le cookie
+                $status = 'added'; // Message de succès pour l'ajout
+            } else {
+                $status = 'already'; // Message si déjà dans les préférences
+            }
+        } else {
+            $status = 'missing'; // Message si l'ID du spectacle est manquant
         }
-        $preferences = isset($_COOKIE['preferences']) ? json_decode($_COOKIE['preferences'], true) : [];
 
-        if (!in_array($idSpectacle, $preferences)) {
-            $preferences[] = $idSpectacle; // juste l'id du spectacle pour ne pas prendre trop de place
-        }
-
-        if (count($preferences) > 10) {
-            array_shift($preferences); //si le nb de preferences depasse 10 on supprime la plus ancienne
-        }
-
-        setcookie('preferences', json_encode($preferences), time() + 3600 * 24 * 30, "/", "", true, true); // 30 jours
-
-        return "<p>Le spectacle a été ajouté à vos préférences.</p>";
+        // Redirige vers la page des spectacles avec le statut
+        header("Location: index.php?action=afficher-liste-spectacle&status=$status");
+        exit;
     }
 }

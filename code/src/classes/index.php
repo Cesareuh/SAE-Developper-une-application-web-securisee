@@ -11,4 +11,3 @@ session_start();
 $d = new Dispatcher();
 
 $d->run();
-var_dump($_SESSION);

@@ -12,7 +12,9 @@ class Dispatcher{
         $this->action = '';
         if (isset($_GET['action'])) {
             $this->action = $_GET['action'];
-        }
+        }else{
+			$this->action = 'afficher-liste-spectacle';
+		}
     }
 
     public function run(){
@@ -63,11 +65,6 @@ class Dispatcher{
                 $actionObj = new \iutnc\nrv\action\AjouterPreferenceCookieAction();
                 $actionObj->execute();
                 break;
-            case 'supprimer-preference':
-                // Créer et exécuter l'action pour supprimer une préférence
-                $actionObj = new \iutnc\nrv\action\SupprimerPreferenceCookieAction();
-                $actionObj->execute();
-                break;
             default:
                 $a = 'Index'; // Ensure $a is always set
                 break;
@@ -87,6 +84,10 @@ class Dispatcher{
             <link rel="stylesheet" type="text/css" href="style.css?v=1">
             <body>
                 <div id="index">
+                <a href="index.php">
+                <img src="../../../images_de_base/logo-removebg-preview.png" alt="logo" id="logo">
+                </a>
+                <div id="index_droite">
                     <a href="index.php?action=afficher-liste-spectacle"><button type="button">afficher liste spectacle</button></a>
                     <a href="index.php?action=afficher-preferences"><button type="button">Mes Préférences</button></a>
         END;
@@ -118,6 +119,7 @@ class Dispatcher{
         END;
         }
         echo <<<END
+                </div>
                 </div>
                 $html
             </body>
