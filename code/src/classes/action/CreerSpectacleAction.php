@@ -37,6 +37,7 @@ class CreerSpectacleAction extends Action
         }
         else {
             if ($this->http_method === 'POST') {
+				try{
                 $repo = Repository::getInstance();
                 $infos = [
                     'titre' => filter_var($_POST['titre'], FILTER_SANITIZE_SPECIAL_CHARS),
@@ -52,10 +53,13 @@ class CreerSpectacleAction extends Action
                 $id_img=$repo->ajouterImage($_FILES['photo']['tmp_name'], $_FILES['photo']['name'], $_FILES['photo']['type'], $_FILES['photo']['size'], $id_bg);
 
 
-                $at = new Spectacle(0, $infos['titre'], $infos['artiste'], $d, $infos['style'], $infos['video'], $infos['description'], $id_img);
+                $at = new Spectacle(0, $infos['titre'], $infos['artiste'], $d, $infos['style'], $infos['video'], $infos['description'], $id_img, "confirmé");
                 $repo->ajouterSpectacle($at);
 
                 return "<div>Spectacle ajouté</div>";
+				}catch(\Exception $e){
+					return "<div>".$e->getMessage()."</div>";
+				}
             } else {
                 return "Mauvais type requete";
             }

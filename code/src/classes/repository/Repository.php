@@ -88,15 +88,16 @@ class Repository {
 
     public function ajouterSpectacle(Spectacle $spectacle)
     {
-        $stmt = $this->pdo->prepare("insert into spectacle values (?,?,?,?,?,?,?,?)");
+        $stmt = $this->pdo->prepare("insert into spectacle values (?,?,?,?,?,?,?,?,?)");
         $id=0;
         $titre=$spectacle->__get('titre');
         $artiste=$spectacle->__get('artiste');
         $duree=$spectacle->__get('duree');
         $style=$spectacle->__get('style');
-        $video=$spectacle->__get('video');
+        $video=str_replace("watch?v=", "embed/" ,$spectacle->__get('video'));
         $photo=$spectacle->__get('id_img');
         $description=$spectacle->__get('description');
+		$statut="confirmé";
         $stmt->bindParam(1, $id);
         $stmt->bindParam(2, $titre);
         $stmt->bindParam(3, $artiste);
@@ -105,6 +106,7 @@ class Repository {
         $stmt->bindParam(6, $video);
         $stmt->bindParam(7, $description);
         $stmt->bindParam(8, $photo);
+        $stmt->bindParam(9, $statut);
         $stmt->execute();
     }
 
@@ -220,19 +222,23 @@ class Repository {
     }
 
     public function ajouterImage(String $img, String $nom, String $type, int $taille, mixed $id_bg):int{
-        $img_blob=file_get_contents($img);
-        $id=0;
-        $stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?,?)');
-        $stmt->bindParam(1, $id);
-        $stmt->bindParam(2, $nom);
-        $stmt->bindParam(3, $taille);
-        $stmt->bindParam(4, $type);
-        $stmt->bindParam(5, $img_blob);
-        $stmt->bindParam(6, $id_bg);
-        $stmt->execute();
-        $id=$this->pdo->lastInsertId();
-        return $id;
-    }
+		if($nom === ""){
+			throw new \Exception("Aucune image sélectionnée");
+		}else{
+			$img_blob=file_get_contents($img);
+			$id=0;
+			$stmt=$this->pdo->prepare('insert into image values (?,?,?,?,?,?)');
+			$stmt->bindParam(1, $id);
+			$stmt->bindParam(2, $nom);
+			$stmt->bindParam(3, $taille);
+			$stmt->bindParam(4, $type);
+			$stmt->bindParam(5, $img_blob);
+			$stmt->bindParam(6, $id_bg);
+			$stmt->execute();
+			$id=$this->pdo->lastInsertId();
+			return $id;
+		}
+	}
 
     public function trouveOptionsPourFiltre(string $filtre): array {
         $query = "SELECT DISTINCT $filtre FROM spectacle 
