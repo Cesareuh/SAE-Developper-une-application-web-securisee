@@ -17,7 +17,6 @@ class RenderSoiree extends Renderer{
 		switch($selector){
 		case 1:
                 $res .= "<div class=simple>
-				<a href='index.php?action=afficher-spectacle&id_spectacle=".$this->soiree->id."' >
 				<div class=haut >
 					<h1 class=artiste>".$this->soiree->nom."</h1>";
     //             if($this->soiree->id_img !== null){
@@ -35,7 +34,7 @@ class RenderSoiree extends Renderer{
 						<h3 class=tarif>Tarif : ".$this->soiree->tarif."€</h3>
 					</div>
 				</div>
-				</div></a>";
+				</div>";
 			break;
 		case 2:
 

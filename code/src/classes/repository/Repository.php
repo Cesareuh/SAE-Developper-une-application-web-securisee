@@ -206,7 +206,7 @@ class Repository {
     // Vérifie si un utilisateur existe déjà par son email
     public function trouverUtilisateurParMail(string $email): ?array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE mail = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE mail = ?");
         $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
@@ -215,7 +215,7 @@ class Repository {
     public function creerUtilisateur(string $email, string $hashedPassword): void
     {
         // On fixe le rôle à 'visiteur' par défaut
-        $stmt = $this->pdo->prepare("INSERT INTO Utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
+        $stmt = $this->pdo->prepare("INSERT INTO utilisateur (mail, MotDePasse, Role) VALUES (?, ?, 'visiteur')");
         $stmt->execute([$email, $hashedPassword]);
     }
 
