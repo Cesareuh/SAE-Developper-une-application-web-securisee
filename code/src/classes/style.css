@@ -196,7 +196,7 @@ a {
 		background-color: #000032ff;
 		margin: 0;
 		padding: 0;
-		height: 50%;
+		height: inherit;
 		border-radius: 0 0 20px 20px ;
 		/* z-index: -1; */
 	}
@@ -233,6 +233,9 @@ ul{
 }
 
 li{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	transition: 0.5s;
 	width: 100px;
 	flex: 0 1 300px;
