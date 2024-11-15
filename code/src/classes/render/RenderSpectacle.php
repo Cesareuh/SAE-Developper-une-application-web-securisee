@@ -71,7 +71,7 @@ class RenderSpectacle extends Renderer
 
     
                 // Ajouter aux préférences
-                $res .= "<a href='index.php?action=ajouter-preference&id_spectacle=".$this->spec->id."' class='btn-preference'>Ajouter aux préférences</a>
+                $res .= "<a href='index.php?action=ajouter-preference&id_spectacle=".$this->spec->id."' class='btn-preference'><button>Ajouter aux préférences</button></a>
                 </div></a>
                 </div>";
                 break;
