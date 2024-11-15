@@ -79,10 +79,9 @@ CREATE TABLE utilisateur (
 
 -- Insertion des utilisateurs
 INSERT INTO `utilisateur` (`id_utilisateur`, `mail`, `motdepasse`, `role`) VALUES
-(1, 'johndoe@gmail.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'visiteur'),
-(2, 'alice@exemple.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'admin'),
-(3, 'bob@exemple.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'staff');
-
+(4, 'alice@mail.com', '$2y$10$xxZDFUHXd5Jao.fQQKosEe5j4MBnnKCglHpZKHrkN/6PAx/shXYl6', 'admin'),
+(5, 'bob@mail.com', '$2y$10$kfkbUFR89ANGlSEOFiaS0eGzblPgPIKPNvBHzTg6ptFud/ARmO.16', 'staff'),
+(6, 'johndoe@mail.com', '$2y$10$oXIA6gKDvKwIhgBwatrhMe2o/xWfJHQW6d7dHcVEdP.UcOcHE0jtW', 'visiteur');
 
 -- Insertion des images
 INSERT INTO `image` (`id_img`, `nom_img`, `taille_img`, `type_img`, `blob_img`, `id_img_bckgrnd`) VALUES

@@ -13,6 +13,13 @@ Si l'importation du fichier rendu.sql ne fonctionne pas, il faut supprimer les d
 ## Exécution
 Pour exécuter le projet, il faut accéder au fichier index.php situé à ```code/src/classes/index.php```
 
+## Utilisateurs
+Visiteur : johndoe@gmail.com
+Staff : bob@gmail.com
+Admin : alice@gmail.com
+
+Les mots de passe sont : 123
+
 ## Lien
 [Github](https://github.com/Cesareuh/SAE-Developper-une-application-web-securisee)
 [Webetu](https://webetu.iutnc.univ-lorraine.fr/~e6436u/SAE-Developper-une-application-web-securisee/code/src/classes/)
