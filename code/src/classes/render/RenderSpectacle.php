@@ -21,10 +21,13 @@ class RenderSpectacle extends Renderer
         // Vérifier si l'utilisateur est connecté et récupérer ses informations
         try {
             $user = AuthnProvider::getSignedInUser();
-            $isStaff = $user['role'] === 'staff'; // Vérifie si l'utilisateur a le rôle 'staff'
+            $isStaff = $user['role'] === 'staff';
+            $isAdmin = $user['role'] === 'admin'; // Vérifie si l'utilisateur a le rôle 'staff'
         } catch (\Exception $e) {
             $isStaff = false; // Si l'utilisateur n'est pas connecté, on suppose qu'il n'est pas staff
+            $isAdmin = false;
         }
+
     
         // Vérifier si le spectacle est annulé
         $statut = $this->spec->statut;
@@ -59,7 +62,7 @@ class RenderSpectacle extends Renderer
                         <h3 class='duree'>".$this->spec->duree." min</h3>
                     </div>";
     
-                if ($isStaff && !$isCancelled) { // Vérifie si l'utilisateur est staff et que le spectacle n'est pas annulé
+                if ($isStaff || $isAdmin && !$isCancelled) { // Vérifie si l'utilisateur est staff et que le spectacle n'est pas annulé
                     $res .= "
                         <form action='index.php?action=afficher-liste-spectacle' method='post'>
                             <input type='hidden' name='id' value='{$this->spec->id}' />
@@ -130,7 +133,7 @@ class RenderSpectacle extends Renderer
     
                 $res .= "</ul>";
     
-                if ($isStaff && !$isCancelled) { // Vérifie si l'utilisateur est staff et que le spectacle n'est pas annulé
+                if ($isStaff || $isAdmin && !$isCancelled) { // Vérifie si l'utilisateur est staff et que le spectacle n'est pas annulé
                     $res .= "
                         <form action='index.php?action=annuler-spectacle' method='post'>
                             <input type='hidden' name='id' value='".$this->spec->id."' />
