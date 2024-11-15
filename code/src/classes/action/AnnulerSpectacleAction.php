@@ -3,27 +3,37 @@
 namespace iutnc\nrv\action;
 
 use iutnc\nrv\auth\AuthnProvider;
+use iutnc\nrv\repository\Repository;
 
 class AnnulerSpectacleAction extends Action
 {
-    public function execute(): string
-    {
+    public function execute(): string {
+        header('Content-Type: application/json');
+    
         // Vérifier si l'utilisateur est connecté et a le rôle 'staff'
         if (AuthnProvider::estConnecte() && AuthnProvider::getRole() === 'staff') {
-
-            $idSpectacle = $_GET['id'] ?? null;
-
-            if ($idSpectacle) {
-                // Annuler le spectacle
+            $id_spectacle = $_POST['id'] ?? null;
+    
+            if ($id_spectacle) {
                 $repo = Repository::getInstance();
-                $repo->annulerSpectacle((int)$idSpectacle);
-
-                return "<p style='color: green;'>Le spectacle a été annulé avec succès.</p>";
+                $spectacle = $repo->getSpectacleById((int)$id_spectacle);
+    
+                if ($spectacle) {
+                    $repo->annulerSpectacle((int)$id_spectacle);
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Spectacle non trouvé.']);
+                    exit;
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'ID de spectacle manquant.']);
+                exit;
             }
-
-        } else {
-            return "<p style='color: red;'>Vous n'avez pas les droits pour annuler un spectacle.</p>";
         }
-        return "<p style='color: red;'>Action impossible.</p>";
+    
+        echo json_encode(['success' => false, 'message' => 'Action non autorisée.']);
+        exit;
     }
+    
 }

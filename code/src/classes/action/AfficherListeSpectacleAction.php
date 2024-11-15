@@ -8,19 +8,38 @@ use iutnc\nrv\render\RenderSpectacle;
 class AfficherListeSpectacleAction extends Action
 {
     public function execute(): string {
-        // Récupérer le filtre et la valeur sélectionnée dans la requête GET
+        $status = '';
+
+        // Vérifier si le formulaire d'annulation a été soumis
+        if (isset($_POST['annuler']) && isset($_POST['id'])) {
+            $idSpectacle = (int)$_POST['id'];
+            $repo = Repository::getInstance();
+            $spectacle = $repo->getSpectacleById($idSpectacle);
+
+            if ($spectacle) {
+                $repo->annulerSpectacle($idSpectacle);
+                $status = 'annule';
+            } else {
+                $status = 'not-found';
+            }
+        }
+
+        // Récupérer le filtre et la valeur sélectionnée dans la requête POST
         $filtre = $_POST['filtre'] ?? '';
         $valeur = $_POST['valeur'] ?? '';
 
-        // Si aucun filtre n'est sélectionné, on affiche tous les spectacles par défaut
+        // Récupérer la liste des spectacles en fonction du filtre
         if ($filtre === '' || $valeur === '') {
             $spectacles = Repository::getInstance()->trouveTousSpectacles();
         } else {
             $spectacles = Repository::getInstance()->trouveSpectaclesFiltres($filtre, $valeur);
         }
 
+        // Initialiser le HTML avec l'affichage des messages d'état
+        $html = $this->afficherMessageStatus($status);
+
         // Générer l'affichage des spectacles
-        $html = "<h1>Liste des Spectacles</h1><ul>";
+        $html .= "<h1>Liste des Spectacles</h1><ul>";
         foreach ($spectacles as $spectacle) {
             $renderSpectacle = new RenderSpectacle($spectacle);
             $html .= "<li>" . $renderSpectacle->render(1) . "</li><br>";
@@ -33,8 +52,21 @@ class AfficherListeSpectacleAction extends Action
         return $html;
     }
 
+    private function afficherMessageStatus(string $status): string {
+        $html = '';
+
+        if ($status === 'annule') {
+            $html = '<p class="message-success">Le spectacle a été annulé avec succès.</p>';
+        } elseif ($status === 'not-found') {
+            $html = '<p class="message-error">Le spectacle n\'a pas été trouvé.</p>';
+        } elseif ($status === 'missing') {
+            $html = '<p class="message-error">Aucun ID de spectacle fourni.</p>';
+        }
+
+        return $html;
+    }
+
     private function genererFormulaireFiltre(string $filtreActuel): string {
-        // Générer le formulaire de sélection du filtre
         $form = '<form method="post" action="">';
         $form .= '<label for="cmbFiltre">Choisir un filtre :</label>';
         $form .= '<select id="cmbFiltre" name="filtre" onchange="this.form.submit()">';
@@ -44,7 +76,7 @@ class AfficherListeSpectacleAction extends Action
         $form .= '<option value="date"' . ($filtreActuel === 'date' ? ' selected' : '') . '>Date</option>';
         $form .= '</select>';
 
-        // Ajouter la combobox des options en fonction du filtre sélectionné
+        // Ajouter la combobox des options dynamiques
         $form .= $this->genererComboboxOptions($filtreActuel);
 
         // Bouton de soumission
@@ -55,13 +87,9 @@ class AfficherListeSpectacleAction extends Action
     }
 
     private function genererComboboxOptions(string $filtre): string {
-        // Vérifier si un filtre est sélectionné
         if ($filtre === '') return '';
 
-        // Récupérer les options disponibles pour le filtre via le Repository
         $options = Repository::getInstance()->trouveOptionsPourFiltre($filtre);
-
-        // Générer la combobox des valeurs
         $combobox = '<select id="cmbValeur" name="valeur">';
         $combobox .= '<option value="">Choisir une valeur</option>';
         foreach ($options as $row) {

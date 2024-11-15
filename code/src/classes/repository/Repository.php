@@ -16,7 +16,8 @@ class Repository {
 
     private function __construct(array $conf) {
         $this->pdo = new \PDO($conf['dsn'], $conf['user'], $conf['pass'],
-            [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+            [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"]);
     }
     public static function getInstance(){
         if (is_null(self::$instance)) {
@@ -339,14 +340,6 @@ class Repository {
         $query->execute();
     }
 
-
-    public function annulerSpectacle(int $idSpectacle): void
-    {
-        $query = $this->pdo->prepare("UPDATE spectacle SET statut = 'annulé' WHERE id_spectacle = :id");
-        $query->bindParam(':id', $idSpectacle, PDO::PARAM_INT);
-        $query->execute();
-    }
-
     public function getImageBgId(int $id_img): mixed {
         $query = $this->pdo->prepare("SELECT id_img_bckgrnd FROM image WHERE id_img = :id");
         $query->bindParam(":id", $id_img);
@@ -386,6 +379,10 @@ class Repository {
         $query->execute();
     }
 
-
-
+    public function annulerSpectacle(int $id_spectacle): void {
+        $query = "UPDATE spectacle SET statut = 'annulé' WHERE id_spectacle = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $id_spectacle, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

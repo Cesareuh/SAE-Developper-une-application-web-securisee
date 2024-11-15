@@ -79,21 +79,18 @@ form *{
 	margin: 0 10px;
 }
 
-.complexe{
-	height: 100%;
-	.bg{
-		position: fixed;
-		width: 100vw;
-		height:100%;
-		z-index: -1;
-
-		filter:blur(5px);
-		transform: scale(1.1);
-		background-size: cover;
-		background-position:center;
-		background-repeat:no-repeat;
-	}
+.complexe .bg {
+    position: fixed;
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+    filter: blur(5px);
+    transform: scale(1.1);
+    background-size: contain; /* Change "cover" en "contain" */
+    background-position: center center; /* Centre l'image verticalement et horizontalement */
+    background-repeat: no-repeat;
 }
+
 
 .haut{
 	padding: 2%;
@@ -273,4 +270,12 @@ li:hover{
   #index_droite, form, #index{
     flex-direction: column;
   }
+}
+
+.annule {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
 }
