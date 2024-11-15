@@ -16,9 +16,9 @@ class AnnulerSpectacleAction extends Action
     
             if ($id_spectacle) {
                 $repo = Repository::getInstance();
-                $spectacle = $repo->getSpectacleById((int)$id_spectacle);
+                $spectacle = $repo->afficherSpectacle((int)$id_spectacle);
     
-                if ($spectacle) {
+                if ($spectacle !== null) {
                     $repo->annulerSpectacle((int)$id_spectacle);
                     echo json_encode(['success' => true]);
                     exit;

@@ -14,9 +14,9 @@ class AfficherListeSpectacleAction extends Action
         if (isset($_POST['annuler']) && isset($_POST['id'])) {
             $idSpectacle = (int)$_POST['id'];
             $repo = Repository::getInstance();
-            $spectacle = $repo->getSpectacleById($idSpectacle);
+            $spectacle = $repo->afficherSpectacle($idSpectacle);
 
-            if ($spectacle) {
+            if ($spectacle !== null) {
                 $repo->annulerSpectacle($idSpectacle);
                 $status = 'annule';
             } else {

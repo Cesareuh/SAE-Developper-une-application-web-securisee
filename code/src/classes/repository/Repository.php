@@ -168,13 +168,6 @@ class Repository {
         return null;
     }
 
-    public function getSpectacleById(int $idSpectacle)
-    {
-        $query = $this->pdo->prepare("SELECT * FROM spectacle WHERE id_spectacle = ?");
-        $query->execute([$idSpectacle]);
-        return $query->fetchObject();
-    }
-
 	public function getSoireeBySpectacleId(int $idSpectacle):array{
 		$stmt = $this->pdo->prepare("select * from soireetospectacle
 			inner join soiree on soiree.id_soiree = soireetospectacle.id_soiree

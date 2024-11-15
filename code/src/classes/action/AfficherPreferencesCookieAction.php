@@ -43,9 +43,6 @@ class AfficherPreferencesCookieAction extends Action
             if ($spectacle) {
                 // Ajouter le titre, l'artiste du spectacle et un bouton de suppression
 				$html .= "<li>".(new RenderSpectacle($spectacle))->render(1). " <a href='index.php?action=afficher-preferences&remove_id=" . $idSpectacle . "' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer ce spectacle de vos préférences ?\");'><button>Supprimer</button></a>"."</li>";
-                // $html .= "<li>" . htmlspecialchars($spectacle->titre) . " - " . htmlspecialchars($spectacle->artiste)
-                    // . " <a href='index.php?action=afficher-preferences&remove_id=" . $idSpectacle . "' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer ce spectacle de vos préférences ?\");'>Supprimer</a>"
-                    // . "</li>";
             } else {
                 // Gérer les erreurs si le spectacle n'est pas trouvé
                 $html .= "<li>Spectacle non trouvé (ID: $idSpectacle)</li>";
