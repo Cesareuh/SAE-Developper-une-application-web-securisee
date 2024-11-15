@@ -9,11 +9,10 @@ class Dispatcher{
     private string $action;
 
     public function __construct(){
-        $this->action = '';
         if (isset($_GET['action'])) {
             $this->action = $_GET['action'];
         }else{
-			$this->action = 'afficher-liste-spectacle';
+			$this->action = '';
 		}
     }
 
@@ -66,7 +65,7 @@ class Dispatcher{
                 $actionObj->execute();
                 break;
             default:
-                $a = 'Index'; // Ensure $a is always set
+                $a = (new action\AccueilAction())->execute();
                 break;
         }
     
