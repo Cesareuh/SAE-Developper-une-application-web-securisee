@@ -78,10 +78,11 @@ CREATE TABLE utilisateur (
 
 
 -- Insertion des utilisateurs
-INSERT INTO utilisateur (mail, motdepasse, role) VALUES
-('JohnDoe@gmail.com', 'hashed_password_1', 'visiteur'),
-('Alice@exemple.com', 'hashed_password_2', 'admin'),
-('Bob@exemple.com', 'hashed_password_3', 'staff');
+INSERT INTO `utilisateur` (`id_utilisateur`, `mail`, `motdepasse`, `role`) VALUES
+(1, 'johndoe@gmail.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'visiteur'),
+(2, 'alice@exemple.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'admin'),
+(3, 'bob@exemple.com', '$2y$10$PB4os4cG2j5UlPxVv0rfSeIOm7g2iQcWV0zKm5tBipjZkX/B9lSGm', 'staff');
+
 
 -- Insertion des images
 INSERT INTO `image` (`id_img`, `nom_img`, `taille_img`, `type_img`, `blob_img`, `id_img_bckgrnd`) VALUES
