@@ -8,5 +8,6 @@
 ## Exécution
 Pour exécuter le projet, il faut accéder au fichier index.php situé à ```code/src/classes/index.php```
 
-## Lien github
-[Lien](https://github.com/Cesareuh/SAE-Developper-une-application-web-securisee)
+## Lien
+[Github](https://github.com/Cesareuh/SAE-Developper-une-application-web-securisee)
+[Webetu](https://webetu.iutnc.univ-lorraine.fr/~e6436u/SAE-Developper-une-application-web-securisee/code/src/classes/)
