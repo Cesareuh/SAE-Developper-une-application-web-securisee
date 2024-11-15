@@ -43,9 +43,6 @@ class InscriptionAction extends Action
                 // Démarrer une session et connecter l'utilisateur automatiquement après l'inscription
                 $_SESSION['utilisateur'] = $mail;
 
-                // Rediriger l'utilisateur vers la page d'accueil
-                header('Location: http://localhost/sae/SAE-Developper-une-application-web-securisee/code/src/classes/index.php');
-                exit;
             } catch (\Exception $e) {
                 // Gérer les erreurs
                 return "<p style='color: red;'>Erreur lors de l'inscription : " . $e->getMessage() . "</p>";
