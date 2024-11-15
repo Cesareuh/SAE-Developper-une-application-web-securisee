@@ -16,7 +16,8 @@ class Repository {
 
     private function __construct(array $conf) {
         $this->pdo = new \PDO($conf['dsn'], $conf['user'], $conf['pass'],
-            [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+            [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"]);
     }
     public static function getInstance(){
         if (is_null(self::$instance)) {

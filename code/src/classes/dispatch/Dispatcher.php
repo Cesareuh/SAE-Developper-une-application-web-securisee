@@ -65,7 +65,7 @@ class Dispatcher{
     private function renderPage(string $html)
     {
         echo <<<END
-            <!doctype html>
+            <!doctype html> 
             <head>
                 <title>NRV</title>
             </head>
